@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Oauth } from "../store/user";
 import axios from "axios";
+import Header from "../components/Header";
 function Login() {
   const dispatch = useDispatch();
   const [email, setEmail] = React.useState("");
@@ -9,15 +10,22 @@ function Login() {
   const logedin = useSelector((state) => state.user.logedin);
   console.log(logedin);
   const login = async (email, password) => {
-  const res = await axios
-      .post("https://e-commerce-backend-2022.herokuapp.com/login", {
-        email,
-        password,
-      },
+  const res = await axios.post(
+    "https://e-commerce-backend-2022.herokuapp.com/login",
+    {
+      email,
+      password,
+    },
+    {
+        withCredentials: true,
+    }
+  );
+      const auth = await axios.get("https://e-commerce-backend-2022.herokuapp.com/Oauth",
+      {
+       
 
-      )
-      console.log(res.data);
-      const auth = await axios.get("https://e-commerce-backend-2022.herokuapp.com/Oauth");
+        withCredentials: true,
+      });
         console.log(auth.data);
 
       
