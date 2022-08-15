@@ -20,14 +20,7 @@ function Login() {
         withCredentials: true,
     }
   );
-      const auth = await axios.get("https://e-commerce-backend-2022.herokuapp.com/Oauth",
-      {
-       
-
-        withCredentials: true,
-      });
-        console.log(auth.data);
-
+   
       
   };
   const singOut =async () => {
@@ -66,6 +59,7 @@ function Login() {
           onClick={(e) => {
             e.preventDefault();
             login(email, password);
+            dispatch(Oauth());
 
           }}
           type="submit"
