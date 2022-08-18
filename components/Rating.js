@@ -7,7 +7,7 @@ function Rating({product}) {
     <div className="flex justify-center my-3 text-yellow-400">
       {[1, 2, 3, 4, 5].map((i) => (
         <span key={i}>
-          {i > product.rate.reviews ? <MdStarBorder /> : <RiStarSFill />}
+          {i > product.rate.rating ? <MdStarBorder /> : <RiStarSFill />}
         </span>
       ))}
     </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState} from 'react'
 
-import afterEffect from "../styles/afterEffect.module.css";
 function Hotdeals() {
   const [time, changeTime] = useState(538400);
   const timer = () => {

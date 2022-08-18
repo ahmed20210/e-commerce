@@ -19,7 +19,6 @@ export const userSlice = createSlice({
         state.logedin = false;
       } else if (action.payload === "Authorized") {
         state.logedin = true;
-        console.log(action.payload)
       }
     });
     builder.addCase(Oauth.rejected, (state, action) => {
@@ -29,13 +28,17 @@ export const userSlice = createSlice({
   },
 });
 
-export const Oauth = createAsyncThunk("user/Oauth", () => {
-  return axios("https://e-commerce-backend-2022.herokuapp.com/oauth",{
+export const Oauth = createAsyncThunk("user/Oauth", async () => {
+  try {
+  const res = await axios("https://e-commerce-backend-2022.herokuapp.com/oauth",{
     withCredentials: true,
-  }).then((response) => {
-    console.log(response.data);
-    return response.data;
-  });
-});
+  })
+  return res.data;
+}
+catch (error) {
+  return error.response.data;
+}
+
+})
 
 export default userSlice.reducer;

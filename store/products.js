@@ -1,9 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 const productsSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
     searchList: [],
+    categories: [],
+    loading: true,
   },
   reducers: {
     setProducts: (state, action) => {
@@ -44,7 +47,28 @@ const productsSlice = createSlice({
   state.searchList = list;
 }
   },
+  extraReducers: (builder) => {
+      builder.addCase(setCategories.pending, (state, action) => {
+        state.loading = true;
+      }
+      );
+      builder.addCase(setCategories.fulfilled, (state, action) => {
+        state.categories = action.payload;
+       
+        state.loading = false;
+      }
+      );
+    }
 });
+export const setCategories = createAsyncThunk("products/setCategories", async () => { 
+  const categories = await axios.get(
+    "https://e-commerce-backend-2022.herokuapp.com/categories"
+  );
+  return categories.data;
+}
+);
+
+
 
 export default productsSlice.reducer;
 export const { setProducts, sortProducts, clearsortProducts, searchProducts } =

@@ -7,6 +7,7 @@ const userCartSlice = createSlice({
     cartItems: {},
     loading: true,
     error: null,
+    cartlength: 0,
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserCart.pending, (state, action) => {
@@ -22,7 +23,7 @@ const userCartSlice = createSlice({
     });
 
     builder.addCase(addToCart.fulfilled, (state, action) => {
-      state.cartItems = action.payload;
+      state.cartlength = action.payload
       state.loading = false;
     });
     builder.addCase(addToCart.rejected, (state, action) => {
@@ -32,6 +33,8 @@ const userCartSlice = createSlice({
 
     builder.addCase(removeFromCart.fulfilled, (state, action) => {
       state.cartItems = action.payload;
+      state.cartlength = action.payload.products.length;
+
       state.loading = false;
     });
     builder.addCase(removeFromCart.rejected, (state, action) => {
@@ -59,6 +62,7 @@ const userCartSlice = createSlice({
 
     builder.addCase(clearCart.fulfilled, (state, action) => {
       state.cartItems = action.payload;
+      state.cartlength = 0;
       state.loading = false;
     });
     builder.addCase(clearCart.rejected, (state, action) => {
@@ -87,7 +91,7 @@ const cartObj = async () => {
 };
 
 export const fetchUserCart = createAsyncThunk("userCart/fetchuserCart", () => {
-  return cartObj();
+  return cartObj()
 });
 export const addToCart = createAsyncThunk("userCart/addToCart", (id) => {
   return axios
@@ -99,9 +103,12 @@ export const addToCart = createAsyncThunk("userCart/addToCart", (id) => {
       }
     )
     .then((response) => {
-      console.log(response.data);
+    return  cartObj().then((data) => {
+        return data.products.length;
+      });
     });
 });
+
 export const removeFromCart = createAsyncThunk(
   "userCart/removeFromCart",
   (id) => {
@@ -114,7 +121,6 @@ export const removeFromCart = createAsyncThunk(
         }
       )
       .then((response) => {
-
         return cartObj();
       });
   }
@@ -129,11 +135,8 @@ export const increaseCart = createAsyncThunk("userCart/icreaseCart", (id) => {
       {
         withCredentials: true,
       }
-     
-      
     )
     .then((response) => {
-     
       return cartObj();
     });
 });
@@ -152,30 +155,28 @@ export const decreaseCart = createAsyncThunk("userCart/decreaseCart", (id) => {
       return cartObj();
     });
 });
-export const clearCart = createAsyncThunk("userCart/clearCart", () => {
-  return axios
-    .post(`https://e-commerce-backend-2022.herokuapp.com/cart/remove`, {
-      withCredentails: true,
-    })
-    .then((response) => {
-      return cartObj();
-    });
+export const clearCart = createAsyncThunk("userCart/clearCart", async () => {
+  const res = await axios.post(
+    "https://e-commerce-backend-2022.herokuapp.com/cart/remove",
+    {},
+    { withCredentials: true }
+  );
+  return cartObj();
 });
 export const changeCart = createAsyncThunk(
   "userCart/changeCart",
-  ({id, quantity}) => {
- return axios
-   .post(
-     `https://e-commerce-backend-2022.herokuapp.com/cart/update`,
-     { productId: id, quantity: quantity },
-     {
-       withCredentials: true,
-     }
-   )
-   .then((response) => {
-     console.log(response.data);
-     return cartObj();
-   });
+  ({ id, quantity }) => {
+    return axios
+      .post(
+        `https://e-commerce-backend-2022.herokuapp.com/cart/update`,
+        { productId: id, quantity: quantity },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        return cartObj();
+      });
   }
 );
 

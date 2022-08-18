@@ -23,6 +23,7 @@ module.exports = {
         98: "450PX",
         97: "420PX",
         100: "800PX",
+        "11/12": "98%",
       },
       borderWidth: {
         1: "1px",

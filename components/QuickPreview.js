@@ -4,7 +4,7 @@ import Rating from "./Rating";
 import { AiOutlineHeart } from "react-icons/ai";
 import home from "../styles/Home.module.css";
 import { useDispatch } from "react-redux";
-import { addToCart, increaseCart } from "../store/cart";
+import { addToCart, changeCart } from "../store/cart";
 import { addWhiteList } from "../store/whitelist";
 function QuickPreview({ product,activ }) {
     const dispatch = useDispatch();
@@ -12,16 +12,16 @@ function QuickPreview({ product,activ }) {
 
   return (
     <div className={`w-screen h-screen flex justify-center items-center z-50 bg-secondary fixed`}>
-      <div className="bg-white w-8/12 h-5/6 rounded-sm opacity-100 flex justify-center py-20 relative">
-        <div className="w-5/12 mr-5 flex justify-center items-center rounded-md border-1">
+      <div className="bg-white w-11/12 md:w-10/12 h-11/12 md:h-5/6 max-h-screen rounded-sm opacity-100 flex md:flex-row flex-col justify-center py-10 overflow-hidden relative">
+        <div className=" md:w-5/12 mx-5 flex justify-center items-center rounded-md border-1">
           <Image
             src={product.image}
             alt={product.name}
             width={300}
-            height={300}
+            height={250}
           />
         </div>
-        <div className="w-5/12 ml-5 flex items-start flex-col justify-star">
+        <div className="w-11/12 md:w-5/12 mx-5 flex items-start flex-col justify-star">
           <h2 className="text-3xl font-">{product.name}</h2>
           <Rating product={product} />
           <p className="text-primary text-2xl font-bold">${product.price}.00</p>
@@ -39,8 +39,7 @@ function QuickPreview({ product,activ }) {
               onClick={() => {
                 if (Qty > 1) {
                  dispatch(addToCart(product._id));
-                 dispatch(increaseCart(product._id, Qty))
-                  
+                 dispatch(changeCart({ id: product._id, quantity: Qty }));
                 } else {
                   dispatch(addToCart(product._id));
                 }
@@ -53,8 +52,8 @@ function QuickPreview({ product,activ }) {
               <AiOutlineHeart />
             </span>
           </div>
-          <p className="text-slate-700 leading-7">
-            {product.description.slice(0, 400)}
+          <p className="text-slate-700 leading-7 max-w-max">
+            {product.description.slice(0, 300)}
           </p>
         </div>
         <button onClick={()=> activ(false)}

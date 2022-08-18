@@ -59,7 +59,7 @@ else {
   return cart.loading ? (
     <div>Loading...</div>
   ) : (
-    cart.cartItems.length > 0 ? (
+    cart.cartItems.products.length > 0 ? (
     <div className="text-gray-800 relative">
 <p className={`bg-red-200 w-72 rounded-3xl text-center fixed top-4 right-1/2 py-1 ${err5}` }><span className="mr-3 bg-white px-2 pb-1 rounded-full  text-red-700">x</span>pls complete Your info frist</p>
       <h2 className="font-bold text-4xl text-center my-14 j">CHECKOUT</h2>
@@ -130,7 +130,6 @@ else {
             <input
               onChange={(e) => {
                 const phone = parseInt(e.target.value);
-                console.log(phone.toString() == "NaN");
                 phone.toString() == "NaN" || e.target.value.length < 5
                   ? setErr4("")
                   : setErr4("hidden");

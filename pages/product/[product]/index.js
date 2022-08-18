@@ -14,6 +14,7 @@ import { addWhiteList } from "../../../store/whitelist";
 import { Oauth } from "../../../store/user";
 
 function Product({ product }) {
+  console.log(product);
   const router = useRouter();
   const dispatch = useDispatch();
   const [Qty, changeQty] = useState(1);
@@ -61,7 +62,7 @@ function Product({ product }) {
     );
     if (res.status === 200) {
       setUserReview([]);
-      console.log(res.data);
+     
     }
   };
   const updateReview = async () => {
@@ -77,11 +78,8 @@ function Product({ product }) {
     );
     if (res.status === 200) {
       setUserReview([res.data]);
-      console.log(res.data);
     }
   };
-
-  dispatch(Oauth());
 
   useEffect(() => {
     review();

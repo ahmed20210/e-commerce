@@ -45,38 +45,45 @@ const whiteListSlice = createSlice({
     });
   },
 });
+const whichList = () => {
+ return axios
+   .get("https://e-commerce-backend-2022.herokuapp.com/whiteList", {
+     withCredentials: true,
+   })
+   .then((response) => {
+     return response.data;
+   });
+}
 
 export const fetchWhiteList = createAsyncThunk(
   "whiteList/fetchWhiteList",
   () => {
-    return axios
-      .get("https://e-commerce-backend-2022.herokuapp.com/whiteList",{
-        withCredentials: true,
-      })
-      .then((response) => {
-        return response.data;
-      });
+  return whichList()
   }
 );
 export const addWhiteList = createAsyncThunk("whiteList/addWhiteList", (id) => {
   return axios
     .post(
       `https://e-commerce-backend-2022.herokuapp.com/whitelist/${id}/add`,
-      { productId: id },
+      {  },
       {
         withCredentials: true,
       }
     )
     .then((response) => {
+      console.log(response.data);
+    return whichList()
     });
 });
-export const removeWhiteList = createAsyncThunk("whiteList/deleteWhiteList", (id) => {
-  return axios
-    .post(`https://e-commerce-backend-2022.herokuapp.com/wishlist/${id}/remove`,{
+export const removeWhiteList = createAsyncThunk("whiteList/deleteWhiteList",async (id) => {
+  const res = await axios.post(
+    `https://e-commerce-backend-2022.herokuapp.com/whitelist/${id}/remove`,
+    {  },
+    {
       withCredentials: true,
-    })
-    .then((response) => {
-      return response.data;
-    });
+    }
+  );
+    console.log(res.data)
+     return whichList();
 });
 export default whiteListSlice.reducer;
