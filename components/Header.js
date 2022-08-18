@@ -50,7 +50,7 @@ function Header() {
             <span className="font-bold">+201144781238</span>
           </li>
         </ul>
-        <div className="flex gap-2 items-center justify-between">
+        <div className="flex gap-2 items-center justify-between text-xs sm:text-lg">
           <Link href={logedin === true ? "/orders" : "/login"}>
             <a>
               <TbTruckDelivery className="inline mr-2 w-5 h-5 " />
@@ -155,11 +155,7 @@ function Header() {
           >
             <li
               onClick={() => {
-                if (pos === "left-0") {
-                  setPos("-left-64");
-                } else {
-                  setPos("left-0");
-                }
+                setPos("-left-64");
               }}
             >
               <Link href={`/`}>
@@ -169,11 +165,7 @@ function Header() {
             {categories.map((category, index) => (
               <li
                 onClick={() => {
-                  if (pos === "left-0") {
-                    setPos("-left-64");
-                  } else {
-                    setPos("left-0");
-                  }
+                 setPos("-left-64");
                 }}
                 key={index}
                 className=""

@@ -72,7 +72,7 @@ const [quk, setQuk] = useState({});
 
         {activeMenu === true ? (
           <div
-            className={`right-4 h-screen fixed z-50 flex justify-end items-end py-10`}
+            className={`right-4 h-screen bottom-1 fixed z-50 flex justify-end items-end py-10`}
           >
             <div className="w-44 h-52 rounded-md px-5 py-2 bg-gray-400 z-40 relative">
               <button
@@ -95,7 +95,7 @@ const [quk, setQuk] = useState({});
                       onChange={(e) => setOption1(e.target.value)}
                     />
                     <input
-                      className="w-5/12"
+                      className="w-5/12 focus:outline-primary"
                       type="number"
                       name="max"
                       placeholder="max"
@@ -110,7 +110,7 @@ const [quk, setQuk] = useState({});
                           filterproducts(sortProducts(categories, option), true)
                         );
                       }}
-                      className="px-3 py-1 rounded-md border-2 bg-primary text-white font-semibold hover:bg-white hover:text-gray-800"
+                      className="px-3 py-1 rounded-md  bg-primary text-white font-semibold hover:bg-white hover:text-gray-800"
                       type={"submit"}
                       value={"filter"}
                     />
@@ -119,7 +119,7 @@ const [quk, setQuk] = useState({});
                         setActiveFilter(false);
                         setproductsList(sortProducts(categories, option));
                       }}
-                      className="px-3 py-1 rounded-md border-2 bg-primary text-white font-semibold hover:bg-white  hover:text-gray-800"
+                      className="px-3 py-1 rounded-md bg-primary text-white font-semibold hover:bg-white  hover:text-gray-800"
                     >
                       reset
                     </button>
@@ -135,7 +135,7 @@ const [quk, setQuk] = useState({});
             {categories[0].category}
           </h1>
           <div className="flex flex-col items-center">
-            <div className="flex items-center w-11/12 bg-gray-300 rounded-xl justify-between">
+            <div className="flex items-center flex-col sm:flex-row py-2 w-11/12 bg-gray-300 rounded-xl justify-between">
               <div className="flex gap-5 mx-5 text-gray-400">
                 <span
                   className="p-3"
@@ -150,7 +150,7 @@ const [quk, setQuk] = useState({});
                 </span>
               </div>
               <select
-                className="bg-white h-9 mx-10 rounded-2xl px-2 focus:outline-none border shadow"
+                className="bg-white h-9 mx-3 rounded-2xl px-2 focus:outline-none border shadow "
                 onChange={(e) => {
                   setOption(e.target.value);
 
