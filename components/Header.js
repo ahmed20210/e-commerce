@@ -83,7 +83,7 @@ function Header() {
       </div>
       <nav className="md:px-8 flex h-1 justify-between  items-center my-1 bg-gray-200 py-7">
         <span>
-          <Image src={logo} width="100" height="100" layout="fixed" alt="logo" />
+          <Image src={logo} width="70" height="60" layout="fixed" alt="logo" />
         </span>
         <form className="md:flex hidden">
           <select
