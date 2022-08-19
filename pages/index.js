@@ -26,6 +26,7 @@ import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import "swiper/css/grid";
 
+
 import { Autoplay, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Icons
@@ -37,11 +38,11 @@ import { BsClockHistory, BsSearch } from "react-icons/bs";
 import { MdOutlineWarningAmber, MdStars } from "react-icons/md";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
-
 // styles
 import home from "../styles/Home.module.css";
 
 export default function Home({ categories, products }) {
+
   const subCategoriesList = (sub) => {
     return products.filter((product) => {
       return product.subcategory
@@ -125,21 +126,27 @@ export default function Home({ categories, products }) {
               </Swiper>
               <div>
                 <ul className="flex mx-5 sm:mx-0 justify-evenly flex-col sm:flex-row">
-                  <li className="sm:w-3/13 my-5 hover:border-primary hover:text-primary mx-3 px-8 py-3 text-center border-2  rounded-md border-neutral-700">
+                  <li
+                    className={`sm:w-3/13 my-5 hover:border-primary hover:text-primary mx-3 px-8 py-3 text-center border-2  rounded-md border-neutral-700`}
+                  >
                     <span className="flex justify-center">
                       <FiTruck className="w-8 h-8" />
                     </span>
                     <h3 className="font-bold ">Free Shipping</h3>
                     <p>Free shipping on all US orders</p>
                   </li>
-                  <li className="hover:border-primary hover:text-primary sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700">
+                  <li
+                    className={`hover:border-primary hover:text-primary sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700`}
+                  >
                     <span className="flex justify-center">
                       <RiExchangeDollarFill className="w-8 h-8" />
                     </span>
                     <h3 className="font-bold ">Money Guarantee</h3>
                     <p>30 days money back guarantee</p>
                   </li>
-                  <li className="hover:border-primary hover:text-primary sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700">
+                  <li
+                    className={`hover:border-primary hover:text-primary sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700`}
+                  >
                     <span className="flex justify-center">
                       <BiSupport className="w-8 h-8" />
                     </span>
@@ -162,22 +169,22 @@ export default function Home({ categories, products }) {
                 alt="banner1"
               />
             </div>
-            <div className="w-full mx-5">
+            <div className="w-full">
               <h2 className="my-3">
-                <span className="text-white bg-primary p-2 pb-3 rounded-md">
+                <span className={`text-white bg-primary p-2 pb-3 rounded-md`}>
                   <BsClockHistory className="inline" />
                 </span>
                 <span className="font-bold text-xl ml-2">DEAL OF THE DAY</span>
               </h2>
               <div className="border-2 border-gray-500 rounded-md flex flex-col lg:flex-row">
                 <div className="lg:w-2/12">
-                  <ul className="flex lg:flex-col items-center lg:justify-evenly justify-center gap-1 sm:gap-3">
+                  <ul className="flex lg:flex-col items-center justify-evenly gap-1 sm:gap-3">
                     {hotDeals.map((product) => {
                       return (
                         <li
                           onClick={() => changeHotdeal(product)}
                           key={product._id}
-                          className="border-2 border-gray-300 my-3 py-3 rounded-md hover:border-primary"
+                          className={`border-2 border-gray-300 my-3 py-3 rounded-md hover:border-primary`}
                         >
                           <Image
                             src={product.image}
@@ -215,7 +222,7 @@ export default function Home({ categories, products }) {
                       <p className="my-3 text-slate-500">
                         {hotdeal.description.slice(0, 150)}
                       </p>
-                      <p className="my-3 text-primary font-bold text-xl">
+                      <p className={`my-3 text-primary font-bold text-xl`}>
                         ${Math.floor((hotdeal.price * 90) / 100)}.00
                         <span className="mx-5 line-through text-slate-500 font-normal">
                           ${hotdeal.price}.00
@@ -224,11 +231,13 @@ export default function Home({ categories, products }) {
                       <div className="my-3">
                         <span
                           onClick={() => dispatch(addToCart(hotdeal._id))}
-                          className="mr-2 px-5 py-3 bg-primary rounded-md text-white font-bold"
+                          className={`mr-2 px-5 py-3 bg-primary rounded-md text-white font-bold`}
                         >
                           ADD TO CART
                         </span>
-                        <button className="p-3 border-2 border-primary text-primary rounded-md hover:bg-primary hover:text-white">
+                        <button
+                          className={`p-3 border-2 border-primary text-primary rounded-md hover:bg-primary hover:text-white`}
+                        >
                           <AiOutlineHeart />
                         </button>
                       </div>
@@ -243,7 +252,7 @@ export default function Home({ categories, products }) {
         <div className="">
           <div className="flex items-center justify-between my-5">
             <h2 className="my-5 ">
-              <span className="p-2 pb-3 rounded-md bg-primary mr-3">
+              <span className={`p-2 pb-3 rounded-md bg-primary mr-3`}>
                 <MdStars className="inline w-7 h-7 text-white" />
               </span>
               FEATURED PRODUCTS
@@ -362,10 +371,10 @@ export default function Home({ categories, products }) {
                   </div>
                   <Rating product={product} />
                   <h2 className="text-slate-800">{product.name} </h2>
-                  <p className="text-primary font-bold text-xl my-3">
+                  <p className={`text-primary font-bold text-xl my-3`}>
                     ${product.price}.00{" "}
                   </p>
-                  <span className="flex justify-center text-primary">
+                  <span className={`flex justify-center text-primary`}>
                     <Link href={`/product/${product._id}`}>
                       <a>
                         {" "}
@@ -401,7 +410,7 @@ export default function Home({ categories, products }) {
         <div className="mt-20">
           <div className="flex items-center justify-between my-5">
             <h2 className=" mx-1 text- sm:text-lg font-bold ">
-              <span className="p-2 pb-4 rounded-md bg-primary mr-1 ">
+              <span className={`p-2 pb-4 rounded-md bg-primary mr-1`}>
                 <MdOutlineWarningAmber className="inline w-7 h-7 text-white" />
               </span>
               NEW ARRIVALS
@@ -449,11 +458,7 @@ export default function Home({ categories, products }) {
               <option value="all">All Categories</option>
               {categories.map((categor) => {
                 return (
-                  <option
-                    key={categor}
-                    value={categor}
-                    className={`${categor === "Watches" ? "hidden" : ""}`}
-                  >
+                  <option key={categor} value={categor}>
                     {categor}
                   </option>
                 );
@@ -515,7 +520,7 @@ export default function Home({ categories, products }) {
                   </div>
                   <Rating product={product} />
                   <h2 className="text-slate-800">{product.name} </h2>
-                  <p className="text-primary font-bold text-xl my-3">
+                  <p className={`text-primary font-bold text-xl my-3`}>
                     ${product.price}.00{" "}
                   </p>
 
@@ -529,7 +534,9 @@ export default function Home({ categories, products }) {
                     <Link href={`/product/${product._id}`}>
                       <a>
                         {" "}
-                        <IoIosArrowDroprightCircle className="w-8 h-8 inline mx-3 text-primary" />
+                        <IoIosArrowDroprightCircle
+                          className={`w-8 h-8 inline mx-3 text-primary`}
+                        />
                       </a>
                     </Link>
                   </span>
@@ -539,14 +546,18 @@ export default function Home({ categories, products }) {
           </div>
         </div>
         <div className="my-10">
-          <h2 className="text-xl font-bold">
-            <span className="p-2 pb-3 bg-primary rounded-md text-sm sm:text-lg text-white mr-3">
-              <RiMedalFill className="inline w-6 h-6" />
-            </span>
-            BESTSELLING
-          </h2>
-          <div className="my-5 flex">
-            <ul className="flex bg-zinc-200 cursor-default text-gray-800 flex-col divide-y divide-gray-300 border-1 rounded-md w-5/12 md:w-3/12 lg:w-2/12 text-sm sm:text-lg ">
+          <div>
+            <h2 className="text-xl font-bold">
+              <span
+                className={`p-2 pb-3 bg-primary rounded-md text-sm sm:text-lg text-white mr-3`}
+              >
+                <RiMedalFill className="inline w-6 h-6" />
+              </span>
+              BESTSELLING
+            </h2>
+          </div>
+          <div className="my-5 flex gap-2">
+            <ul className="  bg-zinc-200 cursor-default text-gray-800 flex-col divide-y divide-gray-300 border-1 rounded-md hidden sm:flex sm:w-5/12 md:w-3/12 lg:w-2/12 text-lg  justify-between">
               <li
                 className={`mx-5 py-5 text-primary hover:text-primary `}
                 onClick={(e) => {
@@ -560,7 +571,7 @@ export default function Home({ categories, products }) {
               </li>
               {categories.slice(0, 14).map((item, index) => (
                 <li
-                  className={`mx-5 py-3 ${item === "Watches" ? "hidden" : ""}`}
+                  className={`mx-5 py-3`}
                   onClick={(e) => {
                     addActive(e);
                     changeBestSelling(
@@ -576,13 +587,16 @@ export default function Home({ categories, products }) {
 
             <Swiper
               breakpoints={{
+                420: {
+                  slidesPerView: 1,
+                  spaceBetween: 0.1,
+                },
                 640: {
-                  slidesPerView: 2,
-                  spaceBetween: 10,
+                  slidesPerView: 1,
                 },
                 768: {
-                  slidesPerView: 3,
-                  spaceBetween: 1,
+                  slidesPerView: 2,
+                  spaceBetween: 10,
                 },
 
                 1024: {
@@ -590,15 +604,15 @@ export default function Home({ categories, products }) {
                   spaceBetween: 1,
                 },
               }}
-              className="mySwiper w-10/12"
+              className="mySwiper"
             >
               {bestSelling.map((item, index) => (
-                <SwiperSlide key={index} className="w-3/12  ">
-                  <div className="flex flex-col items-center ">
+                <SwiperSlide key={index} className="w-full">
+                  <div className="flex flex-col">
                     {item.map((product, i) => (
                       <div
                         key={i + 15}
-                        className={`text-center h-96 w-11/12 mb-3 border-1 p-5  hover:border-2 hover:border-primary rounded-md ${home.iconList}`}
+                        className={`text-center h-96  mb-3 border-1 hover:border-2 hover:border-primary rounded-md ${home.iconList}`}
                       >
                         <div className=" relative overflow-y-hidden">
                           <Image
@@ -641,10 +655,12 @@ export default function Home({ categories, products }) {
                         <Rating product={product} />
                         <h2 className="text-slate-800">{product.name} </h2>
                         <div className="flex items-center justify-center">
-                          <p className="text-primary font-bold text-xl my-3">
+                          <p className={`text-primary font-bold text-xl my-3`}>
                             ${product.price}.00
                           </p>
-                          <span className="flex justify-center text-primary mx-2">
+                          <span
+                            className={`flex justify-center text-primary mx-2`}
+                          >
                             <Link href={`/product/${product._id}`}>
                               <a>
                                 {" "}
