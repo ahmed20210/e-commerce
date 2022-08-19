@@ -409,7 +409,7 @@ export default function Home({ categories, products }) {
         </div>
         <div className="mt-20">
           <div className="flex items-center justify-between my-5">
-            <h2 className=" mx-1 text- sm:text-lg font-bold ">
+            <h2 className=" text-xs md:text-lg font-bold ">
               <span className={`p-2 pb-4 rounded-md bg-primary mr-1`}>
                 <MdOutlineWarningAmber className="inline w-7 h-7 text-white" />
               </span>
