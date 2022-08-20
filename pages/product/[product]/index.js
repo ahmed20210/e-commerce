@@ -9,7 +9,7 @@ import { RiStarSFill } from "react-icons/ri";
 import { MdStarBorder } from "react-icons/md";
 import home from "../../../styles/Home.module.css";
 import { useDispatch } from "react-redux";
-import { addToCart, increaseCart } from "../../../store/cart";
+import { addToCart } from "../../../store/cart";
 import { addWhiteList } from "../../../store/whitelist";
 
 function Product({ product }) {

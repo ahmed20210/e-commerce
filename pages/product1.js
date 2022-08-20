@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Image from 'next/image';
 import { IoIosArrowDroprightCircle } from 'react-icons/io';
 import { FaShoppingCart } from 'react-icons/fa';
@@ -15,6 +15,7 @@ function Product({ product }) {
     const dispatch = useDispatch();
 
   return (
+    product ? (
     <>
     <div className=''>
     </div>
@@ -74,6 +75,7 @@ function Product({ product }) {
         </div>
       </div>
     </>
+    ) : null
   );
 }
 
