@@ -229,6 +229,7 @@ export default function Home({ categories, products }) {
                           ADD TO CART
                         </span>
                         <button
+                        onClick={()=> dispatch(addWhiteList(hotdeal._id))}
                           className={`p-3 border-2 border-primary text-primary rounded-md hover:bg-primary hover:text-white`}
                         >
                           <AiOutlineHeart />

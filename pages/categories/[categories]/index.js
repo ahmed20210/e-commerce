@@ -185,7 +185,7 @@ function Categories({ categories }) {
                           className={`flex justify-center w-32 absolute z-20 ${home.show}`}
                         >
                           <span
-                            onClick={() => dispatch(addWhitelist(product._id))}
+                            onClick={() => dispatch(addWhiteList(product._id))}
                             className={home.iconItem}
                           >
                             <AiOutlineHeart />
