@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserCart } from "../store/cart";
-import checkout from "../styles/checkout.module.css";
 import axios from "axios";
 function Checkout() {
   const dispatch = useDispatch();

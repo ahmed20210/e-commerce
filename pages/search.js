@@ -26,8 +26,8 @@ function Search() {
                     <Image
                       src={product.image}
                       className="max-h-full"
-                      width="200"
-                      height="200"
+                      width={200}
+                      height={200}
                       alt={product.name}
                     />
                     <div className="flex justify-center">

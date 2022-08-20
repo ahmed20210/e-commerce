@@ -6,8 +6,15 @@ const whiteListSlice = createSlice({
   name: "whiteList",
   initialState: {
     WList: [],
+    active: false,
+    message: "",
     loading: false,
     error: null,
+  },
+  reducers: {
+    setActivew: (state, action) => {
+      state.active = false;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchWhiteList.pending, (state, action) => {
@@ -26,6 +33,8 @@ const whiteListSlice = createSlice({
     });
     builder.addCase(addWhiteList.fulfilled, (state, action) => {
       state.WList = action.payload;
+      state.message = "Product successfully added to your whitelist"
+      state.active = true;
       state.loading = false;
     });
     builder.addCase(addWhiteList.rejected, (state, action) => {
@@ -37,6 +46,8 @@ const whiteListSlice = createSlice({
     });
     builder.addCase(removeWhiteList.fulfilled, (state, action) => {
       state.WList = action.payload;
+      state.message = "Product successfully removed from your whitelist"
+      state.active = true;
       state.loading = false;
     });
     builder.addCase(removeWhiteList.rejected, (state, action) => {
@@ -71,8 +82,9 @@ export const addWhiteList = createAsyncThunk("whiteList/addWhiteList", (id) => {
       }
     )
     .then((response) => {
-      console.log(response.data);
+     if (response.data === "add success") {
     return whichList()
+     }
     });
 });
 export const removeWhiteList = createAsyncThunk("whiteList/deleteWhiteList",async (id) => {
@@ -83,7 +95,9 @@ export const removeWhiteList = createAsyncThunk("whiteList/deleteWhiteList",asyn
       withCredentials: true,
     }
   );
-    console.log(res.data)
+   if (res.data === "remove success") {
      return whichList();
+   }
 });
 export default whiteListSlice.reducer;
+export const { setActivew } = whiteListSlice.actions;

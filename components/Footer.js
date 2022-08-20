@@ -9,8 +9,8 @@ import {useSelector} from 'react-redux'
 function Footer() {
     const logedin = useSelector(state => state.logedin)
   return (
-    <div className="bg-gray-200 ">
-      <div className="flex justify-around items-start flex-wrap pb-5">
+    <div className=" bg-fuchsia-700 text-white rounded-tl-3xl rounded-tr-3xl">
+      <div className="flex justify-around items-start flex-wrap pb-5 p-2">
         <div>
           <p className="font-bold text-lg my-3">My Account</p>
           <ul className="flex flex-col gap-2">
@@ -64,7 +64,7 @@ function Footer() {
             </li>
             <li>
               <FaTelegramPlane className="inline text-blue-500 mr-2" /> Mail Me:
-              <span className="font-semibold"> Ahmdmsty345@gmail.com</span>
+              <span className="font-semibold text-xs sm:text-lg"> Ahmdmsty345@gmail.com</span>
             </li>
             <li>
               <IoLogoWhatsapp className="inline text-green-500 mr-2" />
@@ -73,9 +73,10 @@ function Footer() {
           </ul>
         </div>
       </div>
-        <div className="flex justify-center items-center bg-slate-900 text-xs sm:text-lg text-white py-1">
-            Copyright © 2022 by <span className='font-bold pl-1'>SHARABASH</span>. All Rights Reserved.
-</div>
+      <div className="flex justify-center items-center bg-slate-900 text-xs sm:text-lg text-white py-1">
+        Copyright © 2022 by SHARABASH.
+        All Rights Reserved.
+      </div>
     </div>
   );
 }

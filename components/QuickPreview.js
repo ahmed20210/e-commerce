@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Rating from "./Rating";
 import { AiOutlineHeart } from "react-icons/ai";
 import home from "../styles/Home.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart, changeCart } from "../store/cart";
 import { addWhiteList } from "../store/whitelist";
-function QuickPreview({ product,activ }) {
+import { removeActive } from "../store/quk";
+function QuickPreview() {
     const dispatch = useDispatch();
   const [Qty, changeQty] = useState(1);
+  const product = useSelector((state) => state.quk.quk);
 
   return (
     <div className={`w-screen h-screen flex justify-center items-center z-50 bg-secondary fixed`}>
@@ -56,7 +58,7 @@ function QuickPreview({ product,activ }) {
             {product.description.slice(0, 300)}
           </p>
         </div>
-        <button onClick={()=> activ(false)}
+        <button onClick={()=> dispatch(removeActive())}
          className=" text-slate-500 my-2 mx-3 text-xl right-0 absolute top-0 ">
           X
         </button>

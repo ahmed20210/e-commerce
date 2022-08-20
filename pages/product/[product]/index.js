@@ -11,10 +11,8 @@ import home from "../../../styles/Home.module.css";
 import { useDispatch } from "react-redux";
 import { addToCart, increaseCart } from "../../../store/cart";
 import { addWhiteList } from "../../../store/whitelist";
-import { Oauth } from "../../../store/user";
 
 function Product({ product }) {
-  console.log(product);
   const router = useRouter();
   const dispatch = useDispatch();
   const [Qty, changeQty] = useState(1);
@@ -32,7 +30,6 @@ function Product({ product }) {
       );
 
       setUserReview(res.data);
-      console.log(res.data);
     }
   };
   const addReview = async () => {
@@ -48,7 +45,6 @@ function Product({ product }) {
     );
     if (res.status === 200) {
       setUserReview([res.data]);
-      console.log(res.data);
     } else {
     }
   };
@@ -142,7 +138,7 @@ function Product({ product }) {
         </div>
 
         <div className="my-10 ">
-          <div className="my-5">
+          <div className="my-5 font-bold">
             <span
               onClick={() => setDetails(true)}
               className="px-3 py-2 bg-green-400 rounded-md text-white m-1 hover:bg-green-500 cursor-pointer"
@@ -157,9 +153,9 @@ function Product({ product }) {
             </span>
           </div>
 
-          <div className="border overflow-y-auto rounded-lg p-5">
+          <div className="border max-h-screen  overflow-y-scroll rounded-lg p-5">
             {details ? 
-              <p>{product.description}</p>
+              <p className=" text-gray-700 font-light font-mono">{product.description}</p>
              : (
               <div>
                 <ul>
@@ -214,7 +210,7 @@ function Product({ product }) {
                       <form className="">
                         <textarea
                           onChange={(e) => setRate(e.target.value)}
-                          className=" px-2 py-2 rounded-md focus:outline-none border h-44 w-72"
+                          className=" px-2 py-2 rounded-md focus:outline-none border"
                           placeholder="Write your review"
                         />
                       </form>
@@ -222,7 +218,6 @@ function Product({ product }) {
 
                     <button
                       onClick={() => {
-                        console.log(userReview.length);
                         userReview.length === 0 ? addReview() : updateReview();
                       }}
                       className="px-3 py-2 bg-green-400 rounded-md text-white hover:bg-green-500"

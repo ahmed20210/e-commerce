@@ -16,15 +16,23 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "../images/logo.png";
 import axios from "axios";
+import QuickPreview from "./QuickPreview";
+import { setAcive } from "../store/cart";
+import { setActivew } from "../store/whitelist";
 
 function Header() {
   const [option, setOption] = React.useState(`0`);
   const [search, setSearch] = React.useState(``);
+  const activecart = useSelector((state) => state.cart.active);
+  const cartmessage = useSelector((state) => state.cart.message);
+  const whiteActive = useSelector((state) => state.whiteList.active);
+  const whiteMessage = useSelector((state) => state.whiteList.message);
   const dispatch = useDispatch();
   const logedin = useSelector((state) => state.user.logedin);
-  const [pos, setPos] = React.useState("-left-64");
+  const [pos, setPos] = React.useState("-left-80");
   const cart = useSelector((state) => state.cart);
   const categories = useSelector((state) => state.products.categories);
+  const active = useSelector((state) => state.quk.active);
   const logout = async () => {
     const res = await axios.get(
       "https://e-commerce-backend-2022.herokuapp.com/logout",
@@ -39,10 +47,25 @@ function Header() {
   useEffect(() => {
     dispatch(setCategories());
     dispatch(Oauth());
-  }, [logedin]);
+    if (activecart|| whiteActive) {
+      setTimeout(() => {
+        dispatch(setAcive());
+        dispatch(setActivew())
+      }
+      , 1000);
+    }
+  }, [logedin, activecart, whiteActive]);
 
   return (
-    <div>
+    <div >
+    {  activecart || whiteActive ? 
+    <div className="fixed h-screen w-screen  flex justify-center pt-20 z-50">
+      <span className=" bg-green-500 rounded-lg py-3 text-lg text-white font-bold h-24 w-52 text-center "> {
+        activecart ? cartmessage : whiteMessage
+      }</span>
+      </div>
+      : null}
+      {active ? <QuickPreview /> : null}
       <div className="flex justify-between items-center my-1">
         <ul className="md:flex hidden justify-between gap-5 ">
           <li>
@@ -81,9 +104,9 @@ function Header() {
           </div>
         </div>
       </div>
-      <nav className="md:px-8 flex h-1 justify-between  items-center my-1 bg-gray-200 py-7">
-        <span>
-          <Image src={logo} width="70" height="60" layout="fixed" alt="logo" />
+      <nav className="md:px-8 flex h-1 justify-between  items-center my-1 bg-fuchsia-700 py-7">
+        <span className="pt-1">
+          <Image src={logo} width={60} height={50} layout="fixed" alt="logo" />
         </span>
         <form className="md:flex hidden">
           <select
@@ -113,8 +136,8 @@ function Header() {
             }}
           >
             <Link href="/search">
-              <a>
-                <BsSearch className="inline mx-2 " />
+              <a className="p-2 rounded-lg bg-gray-600 mx-2">
+                <BsSearch className="inline  text-white" />
               </a>
             </Link>
           </button>
@@ -141,21 +164,24 @@ function Header() {
         <div className="relative">
           <span
             onClick={() => {
-              if (pos === "-left-64") {
+              if (pos === "-left-80") {
                 setPos("-left-0");
               } else {
-                setPos("-left-64");
+                setPos("-left-80");
               }
             }}
           >
-            <TiThMenu className="w-10 h-7" />
+            <div className="p-0.5 mr-2 rounded-md bg-white">
+              {" "}
+              <TiThMenu className=" w-10 h-7 text-gray-700" />
+            </div>
           </span>
           <ul
-            className={`flex font-medium flex-col justify-between fixed bg-white divide-y z-10 top-0 transition-all ${pos} px-10 py-5 h-screen max-h-screen w-64`}
+            className={`flex font-medium flex-col justify-between fixed bg-white divide-y z-10 top-0 transition-all ${pos} px-10 py-5 h-screen max-h-screen w-52 sm:w-80`}
           >
             <li
               onClick={() => {
-                setPos("-left-64");
+                setPos("-left-80");
               }}
             >
               <Link href={`/`}>
@@ -165,7 +191,7 @@ function Header() {
             {categories.map((category, index) => (
               <li
                 onClick={() => {
-                 setPos("-left-64");
+                  setPos("-left-80");
                 }}
                 key={index}
                 className=""
@@ -178,7 +204,7 @@ function Header() {
           </ul>
         </div>
       </nav>
-      <form className="flex justify-center bg-gray-200 mb-3 md:hidden">
+      <form className="flex justify-center bg-fuchsia-700 mb-3 md:hidden">
         <select
           className="px-4 py-2 rounded-md mx-2 focus:outline-none hidden sm:block"
           onChange={(e) => setOption(e.target.value)}
@@ -205,7 +231,7 @@ function Header() {
             dispatch(searchProducts({ option, search }));
           }}
         >
-          <BsSearch className="inline mx-2 " />
+          <BsSearch className="inline mx-2 text-white" />
         </button>
       </form>
     </div>

@@ -9,7 +9,7 @@ import { addWhiteList } from "../store/whitelist";
 // components
 import Hotdeals from "../components/Hotdeals";
 import QuickPreview from "../components/QuickPreview";
-import Rating from "../components/Rating";
+import Product from "./product1";
 
 // images
 import slider1 from "../images/slider-1.jpg";
@@ -26,7 +26,6 @@ import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import "swiper/css/grid";
 
-
 import { Autoplay, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Icons
@@ -34,15 +33,11 @@ import { FiTruck } from "react-icons/fi";
 import { RiExchangeDollarFill, RiMedalFill } from "react-icons/ri";
 import { BiSupport } from "react-icons/bi";
 import { AiOutlineHeart } from "react-icons/ai";
-import { BsClockHistory, BsSearch } from "react-icons/bs";
+import { BsClockHistory } from "react-icons/bs";
 import { MdOutlineWarningAmber, MdStars } from "react-icons/md";
-import { FaShoppingCart } from "react-icons/fa";
-import { IoIosArrowDroprightCircle } from "react-icons/io";
 // styles
-import home from "../styles/Home.module.css";
 
 export default function Home({ categories, products }) {
-
   const subCategoriesList = (sub) => {
     return products.filter((product) => {
       return product.subcategory
@@ -84,7 +79,6 @@ export default function Home({ categories, products }) {
   const [hotdeal, changeHotdeal] = useState(hotDeals[0]);
   const [bestSelling, changeBestSelling] = useState(makegrid(bestSeller));
   const [active, setActive] = useState(false);
-  const [quk, setQuk] = useState({});
   const dispatch = useDispatch();
 
   const addActive = (e) => {
@@ -127,7 +121,7 @@ export default function Home({ categories, products }) {
               <div>
                 <ul className="flex mx-5 sm:mx-0 justify-evenly flex-col sm:flex-row">
                   <li
-                    className={`sm:w-3/13 my-5 hover:border-primary hover:text-primary mx-3 px-8 py-3 text-center border-2  rounded-md border-neutral-700`}
+                    className={`sm:w-3/13 my-5 hover:border-primary hover:bg-cyan-50 mx-3 px-8 py-3 text-center border-2  rounded-md border-neutral-700`}
                   >
                     <span className="flex justify-center">
                       <FiTruck className="w-8 h-8" />
@@ -136,7 +130,7 @@ export default function Home({ categories, products }) {
                     <p>Free shipping on all US orders</p>
                   </li>
                   <li
-                    className={`hover:border-primary hover:text-primary sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700`}
+                    className={`hover:border-primary hover:bg-cyan-50  sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700`}
                   >
                     <span className="flex justify-center">
                       <RiExchangeDollarFill className="w-8 h-8" />
@@ -145,7 +139,7 @@ export default function Home({ categories, products }) {
                     <p>30 days money back guarantee</p>
                   </li>
                   <li
-                    className={`hover:border-primary hover:text-primary sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700`}
+                    className={`hover:border-primary hover:bg-cyan-50  sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700`}
                   >
                     <span className="flex justify-center">
                       <BiSupport className="w-8 h-8" />
@@ -164,8 +158,8 @@ export default function Home({ categories, products }) {
               <Image
                 src={banner1}
                 layout="fixed"
-                height="485"
-                width="250"
+                height={485}
+                width={250}
                 alt="banner1"
               />
             </div>
@@ -176,7 +170,7 @@ export default function Home({ categories, products }) {
                 </span>
                 <span className="font-bold text-xl ml-2">DEAL OF THE DAY</span>
               </h2>
-              <div className="border-2 border-gray-500 rounded-md flex flex-col lg:flex-row">
+              <div className="border-2 bg-lime-50 rounded-md flex flex-col lg:flex-row">
                 <div className="lg:w-2/12">
                   <ul className="flex lg:flex-col items-center justify-evenly gap-1 sm:gap-3">
                     {hotDeals.map((product) => {
@@ -188,8 +182,8 @@ export default function Home({ categories, products }) {
                         >
                           <Image
                             src={product.image}
-                            width="70"
-                            height="50"
+                            width={70}
+                            height={50}
                             alt={product.name}
                           />
                         </li>
@@ -201,11 +195,10 @@ export default function Home({ categories, products }) {
                   <div className="flex justify-center pt-3 items-center w-5/12">
                     <Link href={`/product/${hotdeal._id}`}>
                       <a>
-                        {" "}
                         <Image
                           src={hotdeal.image}
-                          width="300"
-                          height="300"
+                          width={300}
+                          height={300}
                           alt={hotdeal.name}
                         />
                       </a>
@@ -313,96 +306,44 @@ export default function Home({ categories, products }) {
               breakpoints={{
                 640: {
                   slidesPerView: 2,
-                  spaceBetween: 0.1,
+                  spaceBetween: 10,
                 },
                 768: {
                   slidesPerView: 3,
-                  spaceBetween: 0.1,
+                  spaceBetween: 20,
                 },
                 1024: {
                   slidesPerView: 4,
-                  spaceBetween: 0.1,
+                  spaceBetween: 30,
                 },
               }}
               modules={[]}
               className="mySwiper"
             >
               {FEATURED.map((product, index) => (
-                <SwiperSlide
-                  key={index}
-                  className={`text-center border-1 p-5 min-h-full hover:border-2 hover:border-primary rounded-md ${home.iconList}`}
-                >
-                  <div className="h-52 relative overflow-y-hidden">
-                    <Image
-                      src={product.image}
-                      className="max-h-full"
-                      width="200"
-                      height="200"
-                      alt={product.name}
-                    />
-                    <div className="flex justify-center">
-                      <div
-                        className={`flex justify-center w-32 absolute z-20 ${home.show}`}
-                      >
-                        <span
-                          onClick={() => dispatch(addToCart(product._id))}
-                          className={home.iconItem}
-                        >
-                          <FaShoppingCart />
-                        </span>
-                        <span
-                          onClick={() => dispatch(addWhiteList(product._id))}
-                          className={home.iconItem}
-                        >
-                          <AiOutlineHeart />
-                        </span>
-
-                        <span
-                          onClick={() => {
-                            setQuk(product);
-                            setActive(true);
-                          }}
-                          className={home.iconItem}
-                        >
-                          <BsSearch />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <Rating product={product} />
-                  <h2 className="text-slate-800">{product.name} </h2>
-                  <p className={`text-primary font-bold text-xl my-3`}>
-                    ${product.price}.00{" "}
-                  </p>
-                  <span className={`flex justify-center text-primary`}>
-                    <Link href={`/product/${product._id}`}>
-                      <a>
-                        {" "}
-                        <IoIosArrowDroprightCircle className="w-8 h-8" />
-                      </a>
-                    </Link>
-                  </span>
+                <SwiperSlide key={index}>
+                  <Product product={product} />
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
         </div>
-        <div className="flex my-5">
-          <div className="w-6/12 mr-5">
+        <div className="flex my-5 flex-col sm:flex-row">
+          <div className="sm:w-6/12 sm:mr-5">
             <Image
               src={banner4}
               layout="responsive"
-              width="1000"
-              height="300"
+              width={1000}
+              height={300}
               alt="banner4"
             />
           </div>
-          <div className=" w-6/12">
+          <div className=" sm:w-6/12">
             <Image
               src={banner5}
               layout="responsive"
-              width="1000"
-              height="300"
+              width={1000}
+              height={300}
               alt="banner5"
             />
           </div>
@@ -470,76 +411,22 @@ export default function Home({ categories, products }) {
               breakpoints={{
                 640: {
                   slidesPerView: 2,
-                  spaceBetween: 0.1,
+                  spaceBetween: 10,
                 },
                 768: {
                   slidesPerView: 3,
-                  spaceBetween: 0.1,
+                  spaceBetween: 20,
                 },
                 1024: {
                   slidesPerView: 4,
-                  spaceBetween: 0.1,
+                  spaceBetween: 30,
                 },
               }}
               className="mySwiper h-96"
             >
               {NewArrival.map((product, index) => (
-                <SwiperSlide
-                  className={`text-center border-1 p-5 min-h-full hover:border-2 hover:border-primary rounded-md ${home.iconList}`}
-                  key={index}
-                >
-                  <div className="h-52 relative overflow-y-hidden">
-                    <Image
-                      src={product.image}
-                      className="max-h-full"
-                      width="200"
-                      height="200"
-                      alt={product.name}
-                    />
-                    <div className="flex justify-center">
-                      <div
-                        className={`flex justify-center w-32 absolute z-20 ${home.show}`}
-                      >
-                        <span
-                          onClick={() => dispatch(addWhiteList(product._id))}
-                          className={home.iconItem}
-                        >
-                          <AiOutlineHeart />
-                        </span>
-                        <span
-                          onClick={() => {
-                            setQuk(product);
-                            setActive(true);
-                          }}
-                          className={home.iconItem}
-                        >
-                          <BsSearch />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <Rating product={product} />
-                  <h2 className="text-slate-800">{product.name} </h2>
-                  <p className={`text-primary font-bold text-xl my-3`}>
-                    ${product.price}.00{" "}
-                  </p>
-
-                  <span>
-                    <span
-                      onClick={() => dispatch(addToCart(product._id))}
-                      className={`py-2 px-3 bg-primary text-white rounded-md`}
-                    >
-                      ADD TO CART
-                    </span>
-                    <Link href={`/product/${product._id}`}>
-                      <a>
-                        {" "}
-                        <IoIosArrowDroprightCircle
-                          className={`w-8 h-8 inline mx-3 text-primary`}
-                        />
-                      </a>
-                    </Link>
-                  </span>
+                <SwiperSlide key={index}>
+                  <Product product={product} />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -557,7 +444,7 @@ export default function Home({ categories, products }) {
             </h2>
           </div>
           <div className="my-5 flex gap-2">
-            <ul className="  bg-zinc-200 cursor-default text-gray-800 flex-col divide-y divide-gray-300 border-1 rounded-md hidden sm:flex sm:w-5/12 md:w-3/12 lg:w-2/12 text-lg  justify-between">
+            <ul className=" bg-purple-50 cursor-default text-gray-800 flex-col divide-y divide-gray-300 border-1 rounded-md hidden sm:flex sm:w-5/12 md:w-3/12 lg:w-2/12 text-lg  justify-between">
               <li
                 className={`mx-5 py-5 text-primary hover:text-primary `}
                 onClick={(e) => {
@@ -592,7 +479,8 @@ export default function Home({ categories, products }) {
                   spaceBetween: 0.1,
                 },
                 640: {
-                  slidesPerView: 1,
+                  slidesPerView: 2,
+                  spaceBetween: 10,
                 },
                 768: {
                   slidesPerView: 2,
@@ -601,7 +489,7 @@ export default function Home({ categories, products }) {
 
                 1024: {
                   slidesPerView: 4,
-                  spaceBetween: 1,
+                  spaceBetween: 10,
                 },
               }}
               className="mySwiper"
@@ -610,66 +498,7 @@ export default function Home({ categories, products }) {
                 <SwiperSlide key={index} className="w-full">
                   <div className="flex flex-col">
                     {item.map((product, i) => (
-                      <div
-                        key={i + 15}
-                        className={`text-center h-96  mb-3 border-1 hover:border-2 hover:border-primary rounded-md ${home.iconList}`}
-                      >
-                        <div className=" relative overflow-y-hidden">
-                          <Image
-                            src={product.image}
-                            width="200"
-                            height="200"
-                            alt={product.name}
-                          />
-                          <div className="flex justify-center">
-                            <div
-                              className={`flex justify-center absolute z-20 ${home.show}`}
-                            >
-                              <span
-                                onClick={() => dispatch(addToCart(product._id))}
-                                className={home.iconItem}
-                              >
-                                <FaShoppingCart />
-                              </span>
-                              <span
-                                onClick={() => {
-                                  dispatch(addWhiteList(product._id));
-                                }}
-                                className={home.iconItem}
-                              >
-                                <AiOutlineHeart />
-                              </span>
-
-                              <span
-                                onClick={() => {
-                                  setQuk(product);
-                                  setActive(true);
-                                }}
-                                className={home.iconItem}
-                              >
-                                <BsSearch />
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <Rating product={product} />
-                        <h2 className="text-slate-800">{product.name} </h2>
-                        <div className="flex items-center justify-center">
-                          <p className={`text-primary font-bold text-xl my-3`}>
-                            ${product.price}.00
-                          </p>
-                          <span
-                            className={`flex justify-center text-primary mx-2`}
-                          >
-                            <Link href={`/product/${product._id}`}>
-                              <a>
-                                {" "}
-                                <IoIosArrowDroprightCircle className="w-8 h-8" />
-                              </a>
-                            </Link>
-                          </span>
-                        </div>
-                      </div>
+                      <Product key={i} product={product} />
                     ))}
                   </div>
                 </SwiperSlide>

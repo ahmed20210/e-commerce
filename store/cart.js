@@ -6,8 +6,15 @@ const userCartSlice = createSlice({
   initialState: {
     cartItems: {},
     loading: true,
+    message:"",
+    active:false,
     error: null,
     cartlength: 0,
+  },
+  reducers: {
+    setAcive: (state, action) => {
+      state.active = false;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserCart.pending, (state, action) => {
@@ -24,6 +31,8 @@ const userCartSlice = createSlice({
 
     builder.addCase(addToCart.fulfilled, (state, action) => {
       state.cartlength = action.payload
+      state.message = "Product successfully added to your cart"
+      state.active = true
       state.loading = false;
     });
     builder.addCase(addToCart.rejected, (state, action) => {
@@ -34,6 +43,8 @@ const userCartSlice = createSlice({
     builder.addCase(removeFromCart.fulfilled, (state, action) => {
       state.cartItems = action.payload;
       state.cartlength = action.payload.products.length;
+      state.message = "Product successfully removed from your cart"
+      state.active = true
 
       state.loading = false;
     });
@@ -41,28 +52,11 @@ const userCartSlice = createSlice({
       state.error = action.error;
       state.loading = false;
     });
-
-    builder.addCase(increaseCart.fulfilled, (state, action) => {
-      state.cartItems = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(increaseCart.rejected, (state, action) => {
-      state.error = action.error;
-      state.loading = false;
-    });
-
-    builder.addCase(decreaseCart.fulfilled, (state, action) => {
-      state.cartItems = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(decreaseCart.rejected, (state, action) => {
-      state.error = action.error;
-      state.loading = false;
-    });
-
     builder.addCase(clearCart.fulfilled, (state, action) => {
       state.cartItems = action.payload;
       state.cartlength = 0;
+      state.message = "Your cart successfully cleared"
+      state.active = true;
       state.loading = false;
     });
     builder.addCase(clearCart.rejected, (state, action) => {
@@ -70,8 +64,9 @@ const userCartSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(changeCart.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.cartItems = action.payload;
+      state.message = "Your cart successfully updated"
+      state.active = true;
       state.loading = false;
     });
     builder.addCase(changeCart.rejected, (state, action) => {
@@ -103,10 +98,13 @@ export const addToCart = createAsyncThunk("userCart/addToCart", (id) => {
       }
     )
     .then((response) => {
+      if (response.data === "Added to cart") {
     return  cartObj().then((data) => {
-        return data.products.length;
+        return data.products.length
       });
+      }
     });
+  
 });
 
 export const removeFromCart = createAsyncThunk(
@@ -121,40 +119,13 @@ export const removeFromCart = createAsyncThunk(
         }
       )
       .then((response) => {
-        return cartObj();
+        if (response.data === "Removed from cart") {
+          return cartObj();
+        }
+       
       });
   }
 );
-export const increaseCart = createAsyncThunk("userCart/icreaseCart", (id) => {
-  return axios
-    .post(
-      `https://e-commerce-backend-2022.herokuapp.com/cart/increase`,
-      {
-        productId: id,
-      },
-      {
-        withCredentials: true,
-      }
-    )
-    .then((response) => {
-      return cartObj();
-    });
-});
-export const decreaseCart = createAsyncThunk("userCart/decreaseCart", (id) => {
-  return axios
-    .post(
-      `https://e-commerce-backend-2022.herokuapp.com/cart/decrease`,
-      {
-        productId: id,
-      },
-      {
-        withCredentails: true,
-      }
-    )
-    .then((response) => {
-      return cartObj();
-    });
-});
 export const clearCart = createAsyncThunk("userCart/clearCart", async () => {
   const res = await axios.post(
     "https://e-commerce-backend-2022.herokuapp.com/cart/remove",
@@ -175,9 +146,12 @@ export const changeCart = createAsyncThunk(
         }
       )
       .then((response) => {
-        return cartObj();
+         if (response.data === "Changed") {
+          return cartObj();
+        }
       });
   }
 );
 
 export default userCartSlice.reducer;
+export const { setAcive } = userCartSlice.actions;

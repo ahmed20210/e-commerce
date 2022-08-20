@@ -36,20 +36,19 @@ return () => {
     }
     }, [time]);
   return (
-    <div className="flex lg:justify-between justify-evenly text-sm p-5 bg-slate-100 border-1 border-slate-300 rounded-md max-w-full">
+    <ul className="flex items-center justify-around text-sm  bg-slate-100 border border-slate-300 rounded-md p-3 px-4">
       {timer().map((time, index) => (
-        <div
+        <li
           key={index}
           className={
-           "relative text-center"
+           " text-center flex flex-col"
           }
         >
           <span className="font-bold text-xl">{time.value}</span>
-          <br />
           <span>{time.name}</span>
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 

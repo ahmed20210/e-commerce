@@ -35,8 +35,8 @@ const wishlist = useSelector((state) => state.whiteList.WList);
                 <td>
                   <Image
                     src={product.image}
-                    width="50"
-                    height="50"
+                    width={50}
+                    height={50}
                     alt={product.name}
                   />
                 </td>

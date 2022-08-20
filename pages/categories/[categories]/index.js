@@ -9,24 +9,17 @@ import { useDispatch } from "react-redux";
 import home from "../../../styles/Home.module.css";
 import { addWhiteList } from "../../../store/whitelist";
 import Rating from "../../../components/Rating";
-import QuickPreview from "../../../components/QuickPreview";
 import { addToCart } from "../../../store/cart";
+import { setquk } from "../../../store/quk";
+
 function Categories({ categories }) {
   const [productsList, setproductsList] = useState(categories);
   const [option1, setOption1] = useState("");
   const [option2, setOption2] = useState("");
   const [option, setOption] = useState("default");
   const [activeFilter, setActiveFilter] = useState(false);
-  const [active, setActive] = useState(false);
   const [view , setView] = useState("grid");
-const [quk, setQuk] = useState({});
-   const addActive = (e) => {
-     const current = e.target;
-     current.parentElement.childNodes.forEach((item) => {
-       item.classList.remove("text-gray-400");
-     });
-     current.classList.add("text-gray-800");
-   };
+  
   const sortProducts = (list, option3) => {
     const products = [...list];
     if (option3 === "default") {
@@ -61,7 +54,6 @@ const [quk, setQuk] = useState({});
   const [activeMenu, setActiveMenu] = useState(false);
   return (
     <div>
-      {active ? <QuickPreview product={quk} activ={setActive} /> : null}
       <div className="mx-3 text-gray-700 flex relative">
         <span
           onClick={() => setActiveMenu(true)}
@@ -165,12 +157,16 @@ const [quk, setQuk] = useState({});
                 <option value="rate">Sort by average rating</option>
               </select>
             </div>
-            <ul className="flex flex-wrap divide-x py-3">
+            <ul
+              className={`flex flex-wrap justify-center py-3 gap-5 ${
+                view == "grid" ? " divide-x" : null
+              }`}
+            >
               {productsList.map((product) =>
                 view === "grid" ? (
                   <li
                     key={product._id}
-                    className={`p-5 w-6/12 sm:w-3/12 lg:w-2/12 mb-5 text-center flex flex-col hover:shadow-md relative overflow-y-hidden ${home.icon}`}
+                    className={` bg-slate-50 rounded-3xl p-5 w-9/12 sm:w-3/12 lg:w-2/12 mb-5 text-center flex flex-col hover:shadow-md relative overflow-y-hidden ${home.icon}`}
                   >
                     <p className="font-bold text-gray-400 h-12 overflow-hidden">
                       {product.name}
@@ -197,8 +193,7 @@ const [quk, setQuk] = useState({});
 
                           <span
                             onClick={() => {
-                              setQuk(product);
-                              setActive(true);
+                              dispatch(setquk(product));
                             }}
                             className={home.iconItem}
                           >
@@ -213,7 +208,12 @@ const [quk, setQuk] = useState({});
                         ${product.price}.00
                       </div>
                       <span
-                        onClick={() => dispatch(addToCart(product._id))}
+                        onClick={() => {
+                          dispatch(addToCart(product._id))
+                         setTimeout(() => {
+                            dispatch(setCart(true))
+                          }, 500)
+                        }}
                         className="p-2 border rounded-full hover:text-white hover:bg-primary"
                       >
                         <FaShoppingCart />
@@ -223,9 +223,9 @@ const [quk, setQuk] = useState({});
                 ) : (
                   <li
                     key={product._id}
-                    className={`p-5 w-11/12 sm:w-6/12 md:w-6/12 lg:w-4/12 mb-5 text-center flex hover:shadow-md relative overflow-y-hidden ${home.icon}`}
+                    className={`p-5 w-11/12 text-xs sm:text-base rounded-3xl bg-slate-50 sm:w-8/12 md:w-5/12 lg:w-5/12 mb-5 text-center flex hover:shadow-md relative overflow-y-hidden ${home.icon}`}
                   >
-                    <div className="h-44 w-5/12 flex items-center">
+                    <div className=" w-5/12 flex items-center ">
                       <Link href={`/product/${product._id}`}>
                         <Image
                           src={product.image}
@@ -234,9 +234,9 @@ const [quk, setQuk] = useState({});
                           alt={product.name}
                         />
                       </Link>
-                      <div className="flex justify-center">
+                      <div className="flex justify-center ">
                         <div
-                          className={`flex justify-center w-32 absolute z-20 ${home.show}`}
+                          className={`flex justify-center absolute z-20 ${home.show}`}
                         >
                           <span
                             onClick={() => dispatch(addWhiteList(product._id))}
