@@ -10,6 +10,7 @@ import { addWhiteList } from "../store/whitelist";
 import Hotdeals from "../components/Hotdeals";
 import QuickPreview from "../components/QuickPreview";
 import Product from "./product1";
+import Subcategory from "./subcategory";
 
 // images
 import slider1 from "../images/slider-1.jpg";
@@ -37,7 +38,8 @@ import { BsClockHistory } from "react-icons/bs";
 import { MdOutlineWarningAmber, MdStars } from "react-icons/md";
 // styles
 
-export default function Home({ categories, products }) {
+
+export default function Home({  products }) {
   const subCategoriesList = (sub) => {
     return products.filter((product) => {
       return product.subcategory
@@ -47,47 +49,22 @@ export default function Home({ categories, products }) {
         .includes(sub);
     });
   };
-  const categoriesList = (products, cat) => {
-    if (cat === "all") {
-      return products;
-    } else {
-      return products.filter((product) => {
-        return product.category === cat;
-      });
-    }
-  };
 
   const [FEATURED, setFEATURED] = useState(
-    categoriesList(subCategoriesList("Featured"), "all")
-  );
+   subCategoriesList("Featured"))
+  
   const [NewArrival, setNewArrival] = useState(
-    categoriesList(subCategoriesList("New Arrival"), "all")
-  );
+   subCategoriesList("New Arrival"))
   const bestSeller = subCategoriesList("Best Seller").concat(
     subCategoriesList("Top Rated")
   );
-  const makegrid = (p) => {
-    let grid = [];
-    for (let i = 0; i < p.length; i += 2) {
-      const t = p.slice(i, i + 2);
 
-      grid.push(t);
-    }
-    return grid;
-  };
   const hotDeals = subCategoriesList("Top Rated").slice(22, 26);
   const [hotdeal, changeHotdeal] = useState(hotDeals[0]);
-  const [bestSelling, changeBestSelling] = useState(makegrid(bestSeller));
+  const [bestSelling, changeBestSelling] = useState([]);
   const [active, setActive] = useState(false);
   const dispatch = useDispatch();
 
-  const addActive = (e) => {
-    const current = e.target;
-    current.parentElement.childNodes.forEach((item) => {
-      item.classList.remove("text-primary");
-    });
-    current.classList.add("text-primary");
-  };
   useEffect(() => {
     dispatch(setProducts(products));
   }, []);
@@ -121,7 +98,7 @@ export default function Home({ categories, products }) {
               <div>
                 <ul className="flex mx-5 sm:mx-0 justify-evenly flex-col sm:flex-row">
                   <li
-                    className={`sm:w-3/13 my-5 hover:border-primary hover:bg-cyan-50 mx-3 px-8 py-3 text-center border-2  rounded-md border-neutral-700`}
+                    className={`sm:w-3/13 my-5 hover:border-primary bg-gray-100 hover:bg-cyan-50 mx-3 px-8 py-3 text-center border-2  rounded-md border-neutral-700`}
                   >
                     <span className="flex justify-center">
                       <FiTruck className="w-8 h-8" />
@@ -130,7 +107,7 @@ export default function Home({ categories, products }) {
                     <p>Free shipping on all US orders</p>
                   </li>
                   <li
-                    className={`hover:border-primary hover:bg-cyan-50  sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700`}
+                    className={`hover:border-primary bg-gray-100 hover:bg-cyan-50  sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700`}
                   >
                     <span className="flex justify-center">
                       <RiExchangeDollarFill className="w-8 h-8" />
@@ -139,7 +116,7 @@ export default function Home({ categories, products }) {
                     <p>30 days money back guarantee</p>
                   </li>
                   <li
-                    className={`hover:border-primary hover:bg-cyan-50  sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700`}
+                    className={`hover:border-primary bg-gray-100 hover:bg-cyan-50  sm:w-3/13 my-5 mx-3 px-8 py-3 text-center border-2 rounded-md border-neutral-700`}
                   >
                     <span className="flex justify-center">
                       <BiSupport className="w-8 h-8" />
@@ -229,7 +206,7 @@ export default function Home({ categories, products }) {
                           ADD TO CART
                         </span>
                         <button
-                        onClick={()=> dispatch(addWhiteList(hotdeal._id))}
+                          onClick={() => dispatch(addWhiteList(hotdeal._id))}
                           className={`p-3 border-2 border-primary text-primary rounded-md hover:bg-primary hover:text-white`}
                         >
                           <AiOutlineHeart />
@@ -251,56 +228,10 @@ export default function Home({ categories, products }) {
               </span>
               FEATURED PRODUCTS
             </h2>
-            <ul className={` border-1 rounded-md divide-x hidden lg:flex`}>
-              <li
-                className={`px-3 my-3 hover:text-primary text-primary w-2/12`}
-                onClick={(e) => {
-                  addActive(e);
-                  setFEATURED(
-                    categoriesList(subCategoriesList("Featured"), "all")
-                  );
-                }}
-              >
-                All
-              </li>
-              {categories.slice(1, 8).map((item, index) => (
-                <li
-                  className={`px-3  my-3 hover:text-primary ${
-                    item === "Watches" ? "hidden" : ""
-                  }`}
-                  onClick={(e) => {
-                    addActive(e);
-                    setFEATURED(
-                      categoriesList(subCategoriesList("Featured"), item)
-                    );
-                  }}
-                  key={index}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <select
-              className={`p-2 rounded-md lg:hidden sm:block hidden`}
-              onChange={(e) =>
-                setFEATURED(
-                  categoriesList(subCategoriesList("Featured"), e.target.value)
-                )
-              }
-            >
-              <option value="all">All Categories</option>
-              {categories.map((categor) => {
-                return (
-                  <option
-                    key={categor}
-                    value={categor}
-                    className={`${categor === "Watches" ? "hidden" : ""}`}
-                  >
-                    {categor}
-                  </option>
-                );
-              })}
-            </select>
+            <Subcategory
+              setList={setFEATURED}
+              subcategory={subCategoriesList("Featured")}
+            />
           </div>
           <div>
             <Swiper
@@ -349,6 +280,7 @@ export default function Home({ categories, products }) {
             />
           </div>
         </div>
+
         <div className="mt-20">
           <div className="flex items-center justify-between my-5">
             <h2 className=" text-xs md:text-lg font-bold ">
@@ -357,55 +289,10 @@ export default function Home({ categories, products }) {
               </span>
               NEW ARRIVALS
             </h2>
-            <ul className={`border-1 rounded-md divide-x hidden smd:flex`}>
-              <li
-                className={`px-5 my-3 hover:text-primary text-primary`}
-                onClick={(e) => {
-                  addActive(e);
-                  setNewArrival(
-                    categoriesList(subCategoriesList("New Arrival"), "all")
-                  );
-                }}
-              >
-                All
-              </li>
-              {categories.slice(1, 9).map((item, index) => (
-                <li
-                  className={`px-5 my-3 hover:text-primary ${
-                    item === "Watches" ? "hidden" : ""
-                  }`}
-                  onClick={(e) => {
-                    addActive(e);
-                    setNewArrival(
-                      categoriesList(subCategoriesList("New Arrival"), item)
-                    );
-                  }}
-                  key={index}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <select
-              className={`p-2 rounded-md hidden sm:block smd:hidden`}
-              onChange={(e) =>
-                setNewArrival(
-                  categoriesList(
-                    subCategoriesList("New Arrival"),
-                    e.target.value
-                  )
-                )
-              }
-            >
-              <option value="all">All Categories</option>
-              {categories.map((categor) => {
-                return (
-                  <option key={categor} value={categor}>
-                    {categor}
-                  </option>
-                );
-              })}
-            </select>
+            <Subcategory
+              setList={setNewArrival}
+              subcategory={subCategoriesList("New Arrival")}
+            />
           </div>
           <div>
             <Swiper
@@ -445,33 +332,7 @@ export default function Home({ categories, products }) {
             </h2>
           </div>
           <div className="my-5 flex gap-2">
-            <ul className=" bg-purple-50 cursor-default text-gray-800 flex-col divide-y divide-gray-300 border-1 rounded-md hidden sm:flex sm:w-5/12 md:w-3/12 lg:w-2/12 text-lg  justify-between">
-              <li
-                className={`mx-5 py-5 text-primary hover:text-primary `}
-                onClick={(e) => {
-                  addActive(e);
-                  changeBestSelling(
-                    makegrid(categoriesList(bestSeller, "all"))
-                  );
-                }}
-              >
-                All
-              </li>
-              {categories.slice(0, 14).map((item, index) => (
-                <li
-                  className={`mx-5 py-3`}
-                  onClick={(e) => {
-                    addActive(e);
-                    changeBestSelling(
-                      makegrid(categoriesList(bestSeller, item))
-                    );
-                  }}
-                  key={index}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <Subcategory setList={changeBestSelling} subcategory={bestSeller} />
 
             <Swiper
               breakpoints={{
@@ -493,7 +354,7 @@ export default function Home({ categories, products }) {
                   spaceBetween: 10,
                 },
               }}
-              className="mySwiper"
+              className="mySwiper w-11/12"
             >
               {bestSelling.map((item, index) => (
                 <SwiperSlide key={index} className="w-full">
@@ -516,14 +377,9 @@ export async function getStaticProps() {
   const productList = await axios.get(
     "https://e-commerce-backend-2022.herokuapp.com/product"
   );
-
-  const categories = await axios.get(
-    "https://e-commerce-backend-2022.herokuapp.com/categories"
-  );
   return {
     props: {
       products: productList.data,
-      categories: categories.data,
     },
   };
 }

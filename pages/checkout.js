@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserCart } from "../store/cart";
+import Errorc from "../components/Error";
 import axios from "axios";
 function Checkout() {
   const dispatch = useDispatch();
@@ -11,24 +12,23 @@ function Checkout() {
   }
 
   const cart = useSelector((state) => state.cart);
-  console.log(cart);
   const [country, setCountry] = React.useState("");
   const [city, setCity] = React.useState("");
   const [street, setStreet] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [notes, setNotes] = React.useState("");
   const [payment, setPayment] = React.useState("");
-  const [err1, setErr1] = React.useState("hidden");
-  const [err2, setErr2] = React.useState("hidden");
-  const [err3, setErr3] = React.useState("hidden");
-  const [err4, setErr4] = React.useState("hidden"); 
- const [err5, setErr5] = React.useState("hidden"); 
+  const [err1, setErr1] = React.useState(false);
+  const [err2, setErr2] = React.useState(false);
+  const [err3, setErr3] = React.useState(false);
+  const [err4, setErr4] = React.useState(false); 
+ const [err5, setErr5] = React.useState(false); 
 
   const completeOrder = () => {
   if (country.length<3 || city.length<3 || street.length<10 || phone.length<5 || payment == "") {
-   setErr5("");
+   setErr5(true)
    setTimeout(() => {
-    setErr5("hidden");
+    setErr5(false);
    }, 3000);
   }
 else {
@@ -42,9 +42,8 @@ else {
     withCredentials: true
   }
   ).then(res => {
-    console.log(res);
     fetchUserCart();
-    setErr5("hidden");
+    setErr5(false);
   }
   )
 }
@@ -57,10 +56,13 @@ else {
   });
   return cart.loading ? (
     <div>Loading...</div>
-  ) : (
-    cart.cartItems.products.length > 0 ? (
+  ) : cart.cartItems.products.length > 0 ? (
     <div className="text-gray-800 relative">
-<p className={`bg-red-200 w-72 rounded-3xl text-center fixed top-4 right-1/2 py-1 ${err5}` }><span className="mr-3 bg-white px-2 pb-1 rounded-full  text-red-700">x</span>pls complete Your info frist</p>
+      <div className={`fixed top-4 right-1/2 py-1`}>
+      {  err5 ? (
+        <Errorc error={"pls complete Your info frist"} />
+      ) : null}
+      </div>
       <h2 className="font-bold text-4xl text-center my-14 j">CHECKOUT</h2>
       <div className="flex justify-evenly gap-5 items-center md:items-start flex-col md:flex-row">
         <div className=" w-11/12 sm:w-10/12 md:w-2/5 lg:w-5/12">
@@ -71,81 +73,61 @@ else {
             <label>country:</label>
             <input
               onChange={(e) => {
-                e.target.value.length < 3 ? setErr1("") : setErr1("hidden");
-                setCountry(e.target.value);
+                e.target.value.length < 3
+                  ? setErr1(true)
+                  : setErr1(false);
+                  setCountry(e.target.value);
               }}
               className="border focus:outline-none focus:border-primary rounded-3xl px-3"
               type="text"
               name="country"
             />
-            <p
-              className={`${err1} bg-red-200 rounded-2xl px-3 py-1 font-medium`}
-            >
-              <span className="bg-white px-2 pb-1 mr-3 text-red-700  rounded-full">
-                x
-              </span>
-              you must at least 3 letters
-            </p>
-
+            {err1 ? (
+            <Errorc error={"you must enter at least 3 letters"} />
+            )
+:null}
             <label>city:</label>
             <input
               onChange={(e) => {
-                e.target.value.length < 3 ? setErr2("") : setErr2("hidden");
+                e.target.value.length < 3 ? setErr2(true) : setErr2(false);
                 setCity(e.target.value);
               }}
               className="border focus:outline-none focus:border-primary rounded-3xl px-3"
               type="text"
               name="city"
             />
-            <p
-              className={`${err2} bg-red-200 rounded-2xl px-3 py-1 font-medium`}
-            >
-              <span className="bg-white px-2 pb-1 mr-3 text-red-700  rounded-full">
-                x
-              </span>
-              you must at least 3 letters
-            </p>
-
+            {err2 ? (
+            <Errorc error={"you must enter at least 3 letters"} />
+            ) : null}
             <label>street:</label>
             <input
               onChange={(e) => {
-                e.target.value.length < 10 ? setErr3("") : setErr3("hidden");
+                e.target.value.length < 10 ? setErr3(true) :setErr3(false)
                 setStreet(e.target.value);
               }}
               className="border focus:outline-none focus:border-primary rounded-3xl px-3"
               type="text"
               name="street"
             />
-            <p
-              className={`${err3} bg-red-200 rounded-2xl px-3 py-1 font-medium`}
-            >
-              <span className="bg-white px-2 pb-1 mr-3 text-red-700  rounded-full">
-                x
-              </span>
-              you must at least 10 letters
-            </p>
-
+            {err3 ? (
+            <Errorc error={"you must enter at least 10 letters"} />
+            ) : null}
             <label>phone:</label>
             <input
               onChange={(e) => {
                 const phone = parseInt(e.target.value);
                 phone.toString() == "NaN" || e.target.value.length < 5
-                  ? setErr4("")
-                  : setErr4("hidden");
-                setPhone(parseInt(e.target.value));
+                  ? setErr4(true)
+                  : setErr4(false);
+                  setPhone(parseInt(e.target.value));
               }}
               className="border focus:outline-none focus:border-primary rounded-3xl px-3"
               type="text"
               name="phone"
             />
-            <p
-              className={`${err4} bg-red-200 rounded-2xl px-3 py-1 font-medium`}
-            >
-              <span className="bg-white px-2 pb-1 mr-3 text-red-700  rounded-full">
-                x
-              </span>
-              you must at least 5 numbers
-            </p>
+            {err4 ? (
+            <Errorc error={"you must enter at least 5 numbers"} />
+            ) : null}
 
             <div className="flex flex-col ">
               <label>Notes:</label>
@@ -211,9 +193,10 @@ else {
               </tr>
               <tr>
                 <div className="py-2 my-2 font-semibold">
-                  <button 
-                  onClick={()=>completeOrder()}
-                   className="sm:text-xl text-sm fonst-bold bg-primary py-2 px-5 rounded-3xl text-white">
+                  <button
+                    onClick={() => completeOrder()}
+                    className="sm:text-xl text-sm fonst-bold bg-primary py-2 px-5 rounded-3xl text-white"
+                  >
                     Place Order
                   </button>
                 </div>
@@ -222,8 +205,12 @@ else {
           </table>
         </div>
       </div>
-    </div>):<div className="flex justify-center items-center h-screen text-xl">Your Cart is empty <br/>
-    no order to checkout </div>
+    </div>
+  ) : (
+    <div className="flex justify-center items-center h-screen text-xl">
+      Your Cart is empty <br />
+      no order to checkout{" "}
+    </div>
   );
 }
 

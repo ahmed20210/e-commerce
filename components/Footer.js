@@ -7,7 +7,7 @@ import { FaTelegramPlane } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
 import {useSelector} from 'react-redux'
 function Footer() {
-    const logedin = useSelector(state => state.logedin)
+    const logedin = useSelector(state => state.user.logedin)
   return (
     <div className=" bg-fuchsia-700 text-white rounded-tl-3xl rounded-tr-3xl">
       <div className="flex justify-around items-start flex-wrap pb-5 p-2">
