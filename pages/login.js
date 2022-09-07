@@ -14,7 +14,7 @@ function Login() {
   const login = async (email, password) => {
     try {
       const res = await axios.post(
-        "https://e-commerce-backend-2022.herokuapp.com/login",
+        "https://fake-e-commerce-api.onrender.com/login",
         {
           email,
           password,

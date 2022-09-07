@@ -62,7 +62,7 @@ const productsSlice = createSlice({
 });
 export const setCategories = createAsyncThunk("products/setCategories", async () => { 
   const categories = await axios.get(
-    "https://e-commerce-backend-2022.herokuapp.com/categories"
+    "https://fake-e-commerce-api.onrender.com/categories"
   );
   return categories.data;
 }

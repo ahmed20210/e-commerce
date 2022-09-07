@@ -23,7 +23,7 @@ function Product({ product }) {
   const review = async () => {
     if (!router.isFallback) {
       const res = await axios.get(
-        `https://e-commerce-backend-2022.herokuapp.com/product/reviews/${product._id}`,
+        `https://fake-e-commerce-api.onrender.com/product/reviews/${product._id}`,
         {
           withCredentials: true,
         }
@@ -34,7 +34,7 @@ function Product({ product }) {
   };
   const addReview = async () => {
     const res = await axios.post(
-      `https://e-commerce-backend-2022.herokuapp.com/product/reviews/${product._id}/add`,
+      `https://fake-e-commerce-api.onrender.com/product/reviews/${product._id}/add`,
       {
         review: rate,
         rating: rating,
@@ -50,7 +50,7 @@ function Product({ product }) {
   };
   const revmoveReview = async () => {
     const res = await axios.delete(
-      `https://e-commerce-backend-2022.herokuapp.com/product/reviews/${product._id}/delete`,
+      `https://fake-e-commerce-api.onrender.com/product/reviews/${product._id}/delete`,
 
       {
         withCredentials: true,
@@ -63,7 +63,7 @@ function Product({ product }) {
   };
   const updateReview = async () => {
     const res = await axios.put(
-      `https://e-commerce-backend-2022.herokuapp.com/product/reviews/${product._id}/update`,
+      `https://fake-e-commerce-api.onrender.com/product/reviews/${product._id}/update`,
       {
         review: rate,
         rating: rating,
@@ -260,7 +260,7 @@ export default Product;
 export async function getStaticProps(context) {
   const { params } = context;
   const product = await axios.get(
-    `https://e-commerce-backend-2022.herokuapp.com/product/${params.product}`
+    `https://fake-e-commerce-api.onrender.com/product/${params.product}`
   );
   return {
     props: {

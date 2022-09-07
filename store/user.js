@@ -30,9 +30,9 @@ export const userSlice = createSlice({
 
 export const Oauth = createAsyncThunk("user/Oauth", async () => {
   try {
-  const res = await axios("https://e-commerce-backend-2022.herokuapp.com/oauth",{
+  const res = await axios("https://fake-e-commerce-api.onrender.com/oauth", {
     withCredentials: true,
-  })
+  });
   return res.data;
 }
 catch (error) {

@@ -6,7 +6,7 @@ import axios from "axios";
 function Checkout() {
   const dispatch = useDispatch();
   const fetchOrder = () => {
-    axios.get("https://e-commerce-backend-2022.herokuapp.com/orders",{
+    axios.get("https://fake-e-commerce-api.onrender.com/orders",{
       withCredentials: true
     }).then(res => {console.log(res.data)})
   }
@@ -32,7 +32,7 @@ function Checkout() {
    }, 3000);
   }
 else {
-  axios.post("https://e-commerce-backend-2022.herokuapp.com/orders", {
+  axios.post("https://fake-e-commerce-api.onrender.com/orders", {
  to: `${country}${city}${street}`,
   phone: phone,
   payment: payment,

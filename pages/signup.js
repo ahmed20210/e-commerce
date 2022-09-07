@@ -12,13 +12,13 @@ function Signup() {
   const singUp = async (name, email, password) => {
   try {
    const res = await axios.post(
-      "https://e-commerce-backend-2022.herokuapp.com/signup",
-      {
-        name: name,
-        email: email,
-        password: password,
-      }
-    );
+     "https://fake-e-commerce-api.onrender.com/signup",
+     {
+       name: name,
+       email: email,
+       password: password,
+     }
+   );
     if (res.data === "User created") {
       setShow(true);
       setTimeout(() => {

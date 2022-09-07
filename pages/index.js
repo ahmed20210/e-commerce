@@ -375,7 +375,7 @@ export default function Home({  products }) {
 
 export async function getStaticProps() {
   const productList = await axios.get(
-    "https://e-commerce-backend-2022.herokuapp.com/product"
+    "https://fake-e-commerce-api.onrender.com/product"
   );
   return {
     props: {

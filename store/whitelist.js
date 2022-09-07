@@ -58,7 +58,7 @@ const whiteListSlice = createSlice({
 });
 const whichList = () => {
  return axios
-   .get("https://e-commerce-backend-2022.herokuapp.com/whiteList", {
+   .get("https://fake-e-commerce-api.onrender.com/whiteList", {
      withCredentials: true,
    })
    .then((response) => {
@@ -75,7 +75,7 @@ export const fetchWhiteList = createAsyncThunk(
 export const addWhiteList = createAsyncThunk("whiteList/addWhiteList", (id) => {
   return axios
     .post(
-      `https://e-commerce-backend-2022.herokuapp.com/whitelist/${id}/add`,
+      `https://fake-e-commerce-api.onrender.com/whitelist/${id}/add`,
       {  },
       {
         withCredentials: true,
@@ -89,7 +89,7 @@ export const addWhiteList = createAsyncThunk("whiteList/addWhiteList", (id) => {
 });
 export const removeWhiteList = createAsyncThunk("whiteList/deleteWhiteList",async (id) => {
   const res = await axios.post(
-    `https://e-commerce-backend-2022.herokuapp.com/whitelist/${id}/remove`,
+    `https://fake-e-commerce-api.onrender.com/whitelist/${id}/remove`,
     {  },
     {
       withCredentials: true,

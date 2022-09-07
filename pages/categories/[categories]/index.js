@@ -326,7 +326,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   const { params } = context;
   const categories = await axios.get(
-    `https://e-commerce-backend-2022.herokuapp.com/product/category/${params.categories}`
+    `https://fake-e-commerce-api.onrender.com/product/category/${params.categories}`
   );
   return {
     props: {

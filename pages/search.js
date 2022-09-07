@@ -1,6 +1,5 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { searchProducts } from '../store/products'
 import {FaShoppingCart} from 'react-icons/fa'
 import {AiOutlineHeart} from 'react-icons/ai'
 import {BsSearch} from 'react-icons/bs'

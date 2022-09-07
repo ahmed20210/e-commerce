@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 function Orders() {
 const orderList = () => {
-return axios.get ('https://e-commerce-backend-2022.herokuapp.com/orders',{
+return axios.get ('https://fake-e-commerce-api.onrender.com/orders',{
     withCredentials: true
 })
 .then(res => {
@@ -14,7 +14,7 @@ return axios.get ('https://e-commerce-backend-2022.herokuapp.com/orders',{
 
 const [orders, setOrders] = useState([])
 const cancelOrder = (id) => {
-    axios.delete(`https://e-commerce-backend-2022.herokuapp.com/orders/${id}`
+    axios.delete(`https://fake-e-commerce-api.onrender.com/orders/${id}`
     ,{
         withCredentials: true
     })

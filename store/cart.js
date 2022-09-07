@@ -77,7 +77,7 @@ const userCartSlice = createSlice({
 });
 const cartObj = async () => {
   return axios
-    .get(`https://e-commerce-backend-2022.herokuapp.com/cart`, {
+    .get(`https://fake-e-commerce-api.onrender.com/cart`, {
       withCredentials: true,
     })
     .then((response) => {
@@ -91,7 +91,7 @@ export const fetchUserCart = createAsyncThunk("userCart/fetchuserCart", () => {
 export const addToCart = createAsyncThunk("userCart/addToCart", (id) => {
   return axios
     .post(
-      `https://e-commerce-backend-2022.herokuapp.com/cart/add`,
+      `https://fake-e-commerce-api.onrender.com/cart/add`,
       { productId: id },
       {
         withCredentials: true,
@@ -112,7 +112,7 @@ export const removeFromCart = createAsyncThunk(
   (id) => {
     return axios
       .post(
-        `https://e-commerce-backend-2022.herokuapp.com/cart/delete`,
+        `https://fake-e-commerce-api.onrender.com/cart/delete`,
         { productId: id },
         {
           withCredentials: true,
@@ -128,7 +128,7 @@ export const removeFromCart = createAsyncThunk(
 );
 export const clearCart = createAsyncThunk("userCart/clearCart", async () => {
   const res = await axios.post(
-    "https://e-commerce-backend-2022.herokuapp.com/cart/remove",
+    "https://fake-e-commerce-api.onrender.com/cart/remove",
     {},
     { withCredentials: true }
   );
@@ -139,7 +139,7 @@ export const changeCart = createAsyncThunk(
   ({ id, quantity }) => {
     return axios
       .post(
-        `https://e-commerce-backend-2022.herokuapp.com/cart/update`,
+        `https://fake-e-commerce-api.onrender.com/cart/update`,
         { productId: id, quantity: quantity },
         {
           withCredentials: true,
