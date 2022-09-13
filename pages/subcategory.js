@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from "react-redux"
 
-function Subcategory({subcategory, setList}) {
+function Subcategory({cat ,subcategory, setList}) {
 const categories = useSelector((state) => state.products.categories);
 const [activ, setActiv] = useState("")
 const [bestSell, setBestSell] = useState(false)
@@ -42,14 +42,12 @@ const watchWindow = () => {
     return grid;
   };
 
-
 useEffect(() => {
     watchWindow();
     window.addEventListener("resize", watchWindow);
    
 if (
-  subcategory[0].subcategory[0] === "Best Seller" ||
-  subcategory[0].subcategory[0] === "Top Rated"
+  cat ==="BestSeller" 
 ) { 
   setList(makegrid(subcategory));
   setBestSell(true);
@@ -60,36 +58,35 @@ if (
 
 }
 , []);
+
 if (subcategory){
 if (activ === "list" && !bestSell) {
   return (
-
-        
-      <ul className={` border-1 rounded-md divide-x flex`}>
+    <ul className={`border-1 rounded-md divide-x flex`}>
+      
+      <li
+        className={`px-3 my-3 hover:text-primary text-primary w-2/12`}
+        onClick={(e) => {
+          addActive(e);
+          setList(subcategory, "all");
+        }}
+      >
+        All
+      </li>
+      {categories.slice(1, 7).map((item, index) => (
         <li
-          className={`px-3 my-3 hover:text-primary text-primary w-2/12`}
+          className={`px-3  my-3 hover:text-primary`}
           onClick={(e) => {
             addActive(e);
-            setList(subcategory, "all");
+            setList(categoriesList(subcategory, item));
           }}
+          key={index}
         >
-          All
+          {item}
         </li>
-        {categories.slice(1, 7).map((item, index) => (
-          <li
-            className={`px-3  my-3 hover:text-primary`}
-            onClick={(e) => {
-              addActive(e);
-              setList(categoriesList(subcategory, item));
-            }}
-            key={index}
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-          
-  )
+      ))}
+    </ul>
+  );
         } else if (activ === "select"&& !bestSell) {
             return (
       <select

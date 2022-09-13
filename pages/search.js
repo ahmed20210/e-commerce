@@ -12,9 +12,11 @@ import home from '../styles/Home.module.css'
 function Search() {
     const dispatch = useDispatch()
     const list = useSelector((state) => state.products.searchList)
- 
   return (
-    <div>
+    <div className=' min-h-screen'>
+      {
+        list.length > 0 ?
+      
         <ul className='flex flex-wrap justify-around gap-3 my-5'>
             {list.map((product, index) => 
              <li
@@ -71,6 +73,11 @@ function Search() {
                 </li>
             )}
         </ul>
+:
+<div className="flex justify-center items-center h-screen">
+  No Result Found
+  </div>
+      }
     </div>
   )
 }

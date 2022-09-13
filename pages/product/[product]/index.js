@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Rating from "../../../components/Rating";
@@ -8,7 +7,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { RiStarSFill } from "react-icons/ri";
 import { MdStarBorder } from "react-icons/md";
 import home from "../../../styles/Home.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../store/cart";
 import { addWhiteList } from "../../../store/whitelist";
 
@@ -20,8 +19,11 @@ function Product({ product }) {
   const [rating, setRating] = useState(0);
   const [rate, setRate] = useState("");
   const [userReview, setUserReview] = useState([]);
+    const logedin = useSelector((state) => state.user.logedin);
+
   const review = async () => {
     if (!router.isFallback) {
+      
       const res = await axios.get(
         `https://fake-e-commerce-api.onrender.com/product/reviews/${product._id}`,
         {
@@ -33,19 +35,23 @@ function Product({ product }) {
     }
   };
   const addReview = async () => {
-    const res = await axios.post(
-      `https://fake-e-commerce-api.onrender.com/product/reviews/${product._id}/add`,
-      {
-        review: rate,
-        rating: rating,
-      },
-      {
-        withCredentials: true,
+   
+    if (logedin) {
+      const res = await axios.post(
+        `https://fake-e-commerce-api.onrender.com/product/reviews/${product._id}/add`,
+        {
+          review: rate,
+          rating: rating,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.status === 200) {
+        setUserReview([res.data]);
       }
-    );
-    if (res.status === 200) {
-      setUserReview([res.data]);
     } else {
+      router.push("/login");
     }
   };
   const revmoveReview = async () => {
@@ -119,7 +125,7 @@ function Product({ product }) {
                   } else {
                     dispatch(addToCart(product._id));
                   }
-                }}  
+                }}
                 className="px-5 py-2 font-semibold text-sm cursor-pointer bg-primary rounded-md text-white"
               >
                 ADD TO CART
@@ -152,14 +158,15 @@ function Product({ product }) {
               Reviews
             </span>
           </div>
-
           <div className="border max-h-screen  overflow-y-scroll rounded-lg p-5">
-            {details ? 
-              <p className=" text-gray-700 font-light font-mono">{product.description}</p>
-             : (
+            {details ? (
+              <p className=" text-gray-700 font-light font-mono">
+                {product.description}
+              </p>
+            ) : (
               <div>
                 <ul>
-                  {userReview.length > 0
+                  {userReview.length > 0 && userReview !== "Unauthorized"
                     ? userReview.map((review, index) => (
                         <li
                           key={review._id}
@@ -218,7 +225,9 @@ function Product({ product }) {
 
                     <button
                       onClick={() => {
-                        userReview.length === 0 ? addReview() : updateReview();
+                        userReview.length === 0 || userReview == "Unauthorized"
+                          ? addReview()
+                          : updateReview();
                       }}
                       className="px-3 py-2 bg-green-400 rounded-md text-white hover:bg-green-500"
                     >

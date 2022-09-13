@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { searchProducts } from "../store/products";
+import { searchp } from "../store/products";
 import { useSelector } from "react-redux";
 import { setCategories } from "../store/products";
 import { Oauth } from "../store/user";
@@ -35,7 +35,7 @@ function Header() {
   const active = useSelector((state) => state.quk.active);
   const logout = async () => {
     const res = await axios.get(
-      "https://e-commerce-backend-2022.herokuapp.com/logout",
+      "https://fake-e-commerce-api.onrender.com/logout",
       {
         withCredentials: true,
       }
@@ -47,24 +47,24 @@ function Header() {
   useEffect(() => {
     dispatch(setCategories());
     dispatch(Oauth());
-    if (activecart|| whiteActive) {
+    if (activecart || whiteActive) {
       setTimeout(() => {
         dispatch(setAcive());
-        dispatch(setActivew())
-      }
-      , 1000);
+        dispatch(setActivew());
+      }, 1000);
     }
   }, [logedin, activecart, whiteActive]);
 
   return (
-    <div >
-    {  activecart || whiteActive ? 
-    <div className="fixed h-screen w-screen  flex justify-center pt-20 z-50">
-      <span className=" bg-green-500 rounded-lg py-3 text-lg text-white font-bold h-24 w-52 text-center "> {
-        activecart ? cartmessage : whiteMessage
-      }</span>
-      </div>
-      : null}
+    <div>
+      {activecart || whiteActive ? (
+        <div className="fixed h-screen w-screen  flex justify-center pt-20 z-50">
+          <span className=" bg-green-500 rounded-lg py-3 text-lg text-white font-bold h-24 w-52 text-center ">
+            {" "}
+            {activecart ? cartmessage : whiteMessage}
+          </span>
+        </div>
+      ) : null}
       {active ? <QuickPreview /> : null}
       <div className="flex justify-between items-center my-1">
         <ul className="md:flex hidden justify-between gap-5 ">
@@ -89,8 +89,10 @@ function Header() {
 
             {logedin ? (
               <span
-                onClick={() => logout()}
-                className="bg-primary py-1 px-2 text-white m-1 rounded-md"
+                onClick={() => {
+                  logout();
+                }}
+                className="bg-primary py-1 px-2 text-white m-1 rounded-md cursor-pointer"
               >
                 LOGOUT
               </span>
@@ -104,7 +106,7 @@ function Header() {
           </div>
         </div>
       </div>
-      <nav className="md:px-8 flex h-1 justify-between  items-center my-1 bg-fuchsia-700 py-7">
+      <nav className="md:px-8 flex h-1 justify-between  items-center my-1 bg-tertiary py-7">
         <span className="pt-1">
           <Image src={logo} width={60} height={50} layout="fixed" alt="logo" />
         </span>
@@ -113,7 +115,7 @@ function Header() {
             className="px-4 py-2 rounded-md mx-2 focus:outline-none"
             onChange={(e) => setOption(e.target.value)}
           >
-            <option value="0">All Categories</option>
+            <option value="all">All Categories</option>
             {categories.map((category) => {
               return (
                 <option key={category} value={category}>
@@ -132,7 +134,7 @@ function Header() {
           <button
             onClick={(e) => {
               e.preventDefault();
-              dispatch(searchProducts({ option, search }));
+              dispatch(searchp({ search, option }));
             }}
           >
             <Link href="/search">
@@ -177,12 +179,13 @@ function Header() {
             </div>
           </span>
           <ul
-            className={`flex font-medium flex-col justify-between fixed bg-white divide-y z-10 top-0 transition-all ${pos} px-10 py-5 h-screen max-h-screen w-52 sm:w-80`}
+            className={`z-50 flex font-medium flex-col justify-between divide-y fixed bg-white px-1 top-0 transition-all ${pos}  py-5 h-screen max-h-screen w-52 sm:w-80 border-r`}
           >
             <li
               onClick={() => {
                 setPos("-left-80");
               }}
+              className="hover:bg-tertiary h-16/16 flex items-center rounded-md px-5 hover:text-white"
             >
               <Link href={`/`}>
                 <a> Home</a>
@@ -194,9 +197,9 @@ function Header() {
                   setPos("-left-80");
                 }}
                 key={index}
-                className=""
+                className="hover:bg-tertiary h-16/16 flex items-center rounded-md hover:text-white px-5"
               >
-                <Link href={`/categories/${category}`}>
+                <Link href={`/categories/${category}/0`}>
                   <a>{category === "Home" ? "Furniture" : category}</a>
                 </Link>
               </li>
@@ -204,12 +207,12 @@ function Header() {
           </ul>
         </div>
       </nav>
-      <form className="flex justify-center bg-fuchsia-700 mb-3 md:hidden">
+      <form className="flex justify-center bg-tertiary mb-3 md:hidden">
         <select
           className="px-4 py-2 rounded-md mx-2 focus:outline-none hidden sm:block"
           onChange={(e) => setOption(e.target.value)}
         >
-          <option value="0">All Categories</option>
+          <option value="all">All Categories</option>
           {categories.map((category) => {
             return (
               <option key={category} value={category}>
@@ -228,7 +231,7 @@ function Header() {
         <button
           onClick={(e) => {
             e.preventDefault();
-            dispatch(searchProducts({ option, search }));
+            dispatch(searchp({ search, option }));
           }}
         >
           <BsSearch className="inline mx-2 text-white" />

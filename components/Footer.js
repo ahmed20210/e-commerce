@@ -9,7 +9,7 @@ import {useSelector} from 'react-redux'
 function Footer() {
     const logedin = useSelector(state => state.user.logedin)
   return (
-    <div className=" bg-fuchsia-700 text-white rounded-tl-3xl rounded-tr-3xl">
+    <div className=" bg-tertiary text-white rounded-tl-3xl rounded-tr-3xl">
       <div className="flex justify-around items-start flex-wrap pb-5 p-2">
         <div>
           <p className="font-bold text-lg my-3">My Account</p>

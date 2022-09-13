@@ -38,36 +38,27 @@ import { BsClockHistory } from "react-icons/bs";
 import { MdOutlineWarningAmber, MdStars } from "react-icons/md";
 // styles
 
+export default function Home({ featured, bestSell, trending, hot }) {
+  // const subCategoriesList = (sub) => {
+  //   return products.filter((product) => {
+  //     return product.subcategory
+  //       .map((subCategory) => {
+  //         return subCategory;
+  //       })
+  //       .includes(sub);
+  //   });
+  // };
+  const [FEATURED, setFEATURED] = useState(featured);
 
-export default function Home({  products }) {
-  const subCategoriesList = (sub) => {
-    return products.filter((product) => {
-      return product.subcategory
-        .map((subCategory) => {
-          return subCategory;
-        })
-        .includes(sub);
-    });
-  };
-
-  const [FEATURED, setFEATURED] = useState(
-   subCategoriesList("Featured"))
+  const [TRENDING, setTRENDING] = useState(trending);
   
-  const [NewArrival, setNewArrival] = useState(
-   subCategoriesList("New Arrival"))
-  const bestSeller = subCategoriesList("Best Seller").concat(
-    subCategoriesList("Top Rated")
-  );
 
-  const hotDeals = subCategoriesList("Top Rated").slice(22, 26);
+  const hotDeals = hot
   const [hotdeal, changeHotdeal] = useState(hotDeals[0]);
   const [bestSelling, changeBestSelling] = useState([]);
   const [active, setActive] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setProducts(products));
-  }, []);
   return (
     <div className="overflow-x-hidden">
       {active ? <QuickPreview product={quk} activ={setActive} /> : null}
@@ -175,7 +166,7 @@ export default function Home({  products }) {
                         <Image
                           src={hotdeal.image}
                           width={300}
-                          height={300}
+                          height={200}
                           alt={hotdeal.name}
                         />
                       </a>
@@ -222,16 +213,12 @@ export default function Home({  products }) {
 
         <div className="">
           <div className="flex items-center justify-between my-5">
-            <h2 className="my-5 ">
+            <h2 className="my-5">
               <span className={`p-2 pb-3 rounded-md bg-primary mr-3`}>
                 <MdStars className="inline w-7 h-7 text-white" />
               </span>
               FEATURED PRODUCTS
             </h2>
-            <Subcategory
-              setList={setFEATURED}
-              subcategory={subCategoriesList("Featured")}
-            />
           </div>
           <div>
             <Swiper
@@ -287,12 +274,8 @@ export default function Home({  products }) {
               <span className={`p-2 pb-4 rounded-md bg-primary mr-1`}>
                 <MdOutlineWarningAmber className="inline w-7 h-7 text-white" />
               </span>
-              NEW ARRIVALS
+              TRENDING
             </h2>
-            <Subcategory
-              setList={setNewArrival}
-              subcategory={subCategoriesList("New Arrival")}
-            />
           </div>
           <div>
             <Swiper
@@ -312,7 +295,7 @@ export default function Home({  products }) {
               }}
               className="mySwiper h-96"
             >
-              {NewArrival.map((product, index) => (
+              {TRENDING.map((product, index) => (
                 <SwiperSlide key={index}>
                   <Product product={product} />
                 </SwiperSlide>
@@ -332,7 +315,7 @@ export default function Home({  products }) {
             </h2>
           </div>
           <div className="my-5 flex gap-2">
-            <Subcategory setList={changeBestSelling} subcategory={bestSeller} />
+            <Subcategory cat={"BestSeller"} setList={changeBestSelling} subcategory={bestSell} />
 
             <Swiper
               breakpoints={{
@@ -374,12 +357,29 @@ export default function Home({  products }) {
 }
 
 export async function getStaticProps() {
-  const productList = await axios.get(
-    "https://fake-e-commerce-api.onrender.com/product"
+  const bestSell =await axios
+    .get(
+      "https://fake-e-commerce-api.onrender.com/product/subcategory/Best Seller"
+    )
+    
+  const featured = await axios.get(
+    "https://fake-e-commerce-api.onrender.com/product/subcategory/Featured/limit/1/15"
   );
+  const trending = await axios.get(
+    "https://fake-e-commerce-api.onrender.com/product/subcategory/Trending/limit/1/15"
+  );
+  const hotd = await axios.get(
+    "https://fake-e-commerce-api.onrender.com/product/subcategory/Hot Deals/limit/0/6"
+  );
+    
+const hot = hotd.data
+hot.splice(3,2)
   return {
     props: {
-      products: productList.data,
+      featured: featured.data,
+      bestSell: bestSell.data,
+      trending: trending.data,
+      hot: hot,
     },
   };
 }
